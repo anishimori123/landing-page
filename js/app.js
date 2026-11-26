@@ -49,6 +49,9 @@
   // ---------- mini calendar ----------
   let calTodayKey = "";
   let calShown = { y: new Date().getFullYear(), m: new Date().getMonth() };
+  let calEventDays = new Set(); // "YYYY-MM-DD" days that have events (filled by calendar.js)
+  let calSelected = null;       // day clicked in the mini calendar
+  const pad2 = (n) => String(n).padStart(2, "0");
 
   function renderCalendar() {
     const now = new Date();
@@ -62,9 +65,14 @@
     for (let d = 1; d <= daysInMonth; d++) {
       const wd = new Date(y, m, d).getDay();
       const isToday = isThisMonth && d === now.getDate();
-      cells.push(el("div", {
-        class: "cal-day" + (isToday ? " today" : "") + (wd === 0 || wd === 6 ? " weekend" : ""),
+      const key = `${y}-${pad2(m + 1)}-${pad2(d)}`;
+      cells.push(el("button", {
+        type: "button",
+        class: "cal-day" + (isToday ? " today" : "") + (wd === 0 || wd === 6 ? " weekend" : "") +
+          (calEventDays.has(key) ? " has-events" : "") + (calSelected === key ? " selected" : ""),
         "aria-current": isToday ? "date" : null,
+        "aria-label": new Date(y, m, d).toDateString() + (calEventDays.has(key) ? ", has events" : ""),
+        onclick: () => window.dispatchEvent(new CustomEvent("lp:day", { detail: key })),
       }, d));
     }
     $("#cal-grid").replaceChildren(...cells);
@@ -74,7 +82,16 @@
     const d = new Date(calShown.y, calShown.m + step, 1);
     calShown = { y: d.getFullYear(), m: d.getMonth() };
     renderCalendar();
+    window.dispatchEvent(new CustomEvent("lp:month"));
   }
+
+  // Small shared toolbox for calendar.js
+  window.LP = {
+    el,
+    getShownMonth: () => ({ ...calShown }),
+    setEventDays(days) { calEventDays = days; renderCalendar(); },
+    selectDay(key) { calSelected = key; renderCalendar(); },
+  };
 
   // ---------- clocks ----------
   function partsIn(tz, now) {
@@ -355,7 +372,12 @@
     renderGreeting();
     $("#cal-prev").addEventListener("click", () => moveCalendar(-1));
     $("#cal-next").addEventListener("click", () => moveCalendar(1));
-    $("#cal-title").addEventListener("click", () => { const n = new Date(); calShown = { y: n.getFullYear(), m: n.getMonth() }; renderCalendar(); });
+    $("#cal-title").addEventListener("click", () => {
+      const n = new Date();
+      calShown = { y: n.getFullYear(), m: n.getMonth() };
+      renderCalendar();
+      window.dispatchEvent(new CustomEvent("lp:month"));
+    });
     buildClocks();
     renderLinks();
     renderTodos();

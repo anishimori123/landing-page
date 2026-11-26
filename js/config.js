@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.2.1",
+  version: "1.3.0",
   name: "Atsuwwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -52,6 +52,11 @@ window.CONFIG = {
     { name: "Palm Desert", lat: 33.7222, lon: -116.3745 },
     { name: "New York", lat: 40.7128, lon: -74.006 },
   ],
+
+  // Google Calendar: the app ID from Google Cloud (not a secret; it only works
+  // on https://anishimori123.github.io). Events never get saved in this repo.
+  googleClientId: "986348569746-k5qamhfpv3jblem4qsavmc86vbsg44ak.apps.googleusercontent.com",
+  calendarDaysAhead: 7,
 
   // "fahrenheit" or "celsius"
   temperatureUnit: "fahrenheit",

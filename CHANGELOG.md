@@ -25,11 +25,21 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.3.0**](#v130--2026-11-25-time-spent-45-min) | 2026-11-25 | 45 min | 📅 My Google Calendar: see, add, change, delete events |
 | [**v1.2.1**](#v121--2026-11-25-time-spent-2-min) | 2026-11-25 | 2 min | 📊 Myojin spreadsheet link in My projects |
 | [**v1.2.0**](#v120--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 📅 Mini calendar, yellow nickname, seconds on clocks, °F + °C |
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.3.0 — 2026-11-25 (time spent: ~45 min)
+- **What changed:**
+  - 📅 New **My calendar** card, connected to my Google Calendar (all my calendars). "Sign in with Google" shows my next 7 days of events in the dark theme.
+  - ＋ **Add event** (title, start/end, all day, place, which calendar). **Click an event** to change it or delete it. Delete asks "Are you sure?" first. Holidays and other view-only calendars can't be changed.
+  - The **mini calendar** now has dots on days with events. Clicking a day shows that day; when signed out, it opens Google Calendar on that day.
+  - Set up in Google Cloud: project `landing-page`, Calendar API on, sign-in screen in **Testing** with only me as a user, and a web app ID allowed only on `https://anishimori123.github.io`. The ID (not a secret) is in `js/config.js`.
+  - Tested with a fake Google account: 27 checks passed (sign-in, missing permission, all calendars, add, change, repeating event, view-only, delete with confirm, all-day, expired sign-in, sign out).
+- **Why:** I want to see and edit my calendar on my start page instead of opening Google Calendar. Events go straight from Google to my browser and are never saved in this public repo.
 
 ## v1.2.1 — 2026-11-25 (time spent: ~2 min)
 - **What changed:** Added a "Myojin sheet" button (my Myojin test Google Sheet) to **My projects**, next to Myojin.

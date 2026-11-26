@@ -6,7 +6,8 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 
 ## What's on it
 - 🔍 **Google search box**
-- 📅 **Mini calendar** (top right) with today highlighted
+- 📅 **Mini calendar** (top right) with today highlighted and dots on days with events
+- 📅 **My calendar:** my Google Calendar (all calendars). See the next 7 days, add, change and delete events. Sign in with Google once
 - 🕐 **World clocks** with seconds: San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
 - 🌤️ **Weather in one shot** (°F and °C): San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
   - **Today** view: now, high/low, rain chance (when 30% or more)
@@ -20,7 +21,14 @@ This repo is **public**, so nothing private goes in it.
 To-dos and my city list are saved **only in my browser** (localStorage), never uploaded.
 They don't sync between my PC and phone.
 
+## Google Calendar
+- Sign-in is Google's own window. The page gets a pass that lasts about 1 hour, then shows a one-click **Reconnect** button.
+- The Google Cloud project `landing-page` is in **Testing** mode with only me as a test user. Google shows "Google hasn't verified this app" at sign-in, which is normal for a personal app; click **Continue**.
+- The app ID in `js/config.js` is not a secret. It only works on `https://anishimori123.github.io`.
+- Events are never saved in this repo; they go straight from Google to my browser.
+
 ## Free services used
+- Calendar: Google Calendar API (free for personal use).
 - Weather and city search: [Open-Meteo](https://open-meteo.com/). Free, no account, no key.
 - Hosting: GitHub Pages (free for public repos).
 
@@ -31,6 +39,7 @@ They don't sync between my PC and phone.
 | `css/style.css` | Colors and layout (dark theme, phone layout) |
 | `js/config.js` | **My settings:** clocks, starting cities, projects, quick links. Edit this one |
 | `js/app.js` | How everything works |
+| `js/calendar.js` | My Google Calendar card (sign-in, events, add/change/delete) |
 | `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
 | `stats/code-lines.json` | Lines of code per version (for the chart) |
 
