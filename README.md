@@ -6,8 +6,9 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 
 ## What's on it
 - 🔍 **Google search box**
-- 🕐 **World clocks:** San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
-- 🌤️ **Weather in one shot:** San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
+- 📅 **Mini calendar** (top right) with today highlighted
+- 🕐 **World clocks** with seconds: San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
+- 🌤️ **Weather in one shot** (°F and °C): San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
   - **Today** view: now, high/low, rain chance (when 30% or more)
   - **7 days** view: a table comparing every city for the week
   - ＋ add any city, ✕ remove one (remembered in this browser)

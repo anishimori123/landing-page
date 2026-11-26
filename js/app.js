@@ -39,17 +39,51 @@
     const now = new Date();
     const h = now.getHours();
     const hello = h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-    $("#greeting").textContent = `${hello}, ${C.name}`;
+    $("#greeting").replaceChildren(`${hello}, `, el("span", { class: "nick" }, C.name));
     $("#today").textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+    // New day? Move the calendar to today
+    const todayKey = now.toDateString();
+    if (todayKey !== calTodayKey) { calTodayKey = todayKey; calShown = { y: now.getFullYear(), m: now.getMonth() }; renderCalendar(); }
+  }
+
+  // ---------- mini calendar ----------
+  let calTodayKey = "";
+  let calShown = { y: new Date().getFullYear(), m: new Date().getMonth() };
+
+  function renderCalendar() {
+    const now = new Date();
+    const { y, m } = calShown;
+    const first = new Date(y, m, 1);
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const isThisMonth = y === now.getFullYear() && m === now.getMonth();
+    $("#cal-title").textContent = first.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    const cells = ["S", "M", "T", "W", "T", "F", "S"].map((d) => el("div", { class: "cal-dow" }, d));
+    for (let i = 0; i < first.getDay(); i++) cells.push(el("div", {}));
+    for (let d = 1; d <= daysInMonth; d++) {
+      const wd = new Date(y, m, d).getDay();
+      const isToday = isThisMonth && d === now.getDate();
+      cells.push(el("div", {
+        class: "cal-day" + (isToday ? " today" : "") + (wd === 0 || wd === 6 ? " weekend" : ""),
+        "aria-current": isToday ? "date" : null,
+      }, d));
+    }
+    $("#cal-grid").replaceChildren(...cells);
+  }
+
+  function moveCalendar(step) {
+    const d = new Date(calShown.y, calShown.m + step, 1);
+    calShown = { y: d.getFullYear(), m: d.getMonth() };
+    renderCalendar();
   }
 
   // ---------- clocks ----------
   function partsIn(tz, now) {
-    const time = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit" }).format(now);
+    const t = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "2-digit", second: "2-digit" })
+      .formatToParts(now).map((p) => [p.type, p.value]));
     const hour = Number(new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", hourCycle: "h23" }).format(now)) % 24;
     const date = new Intl.DateTimeFormat("en-CA", { timeZone: tz }).format(now); // YYYY-MM-DD
     const weekday = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short" }).format(now);
-    return { time, hour, date, weekday };
+    return { hm: `${t.hour}:${t.minute}`, sec: t.second, ampm: t.dayPeriod || "", hour, date, weekday };
   }
 
   // Each clock slot remembers which time zone was picked in its drop-down
@@ -89,7 +123,7 @@
       const isDay = p.hour >= 6 && p.hour < 18;
       const when = p.date > home ? `${p.weekday} · tomorrow` : p.date < home ? `${p.weekday} · yesterday` : p.weekday;
       slot.card.classList.toggle("night", !isDay);
-      slot.time.textContent = p.time;
+      slot.time.replaceChildren(p.hm, el("span", { class: "sec" }, ":" + p.sec), " " + p.ampm);
       slot.sub.textContent = `${isDay ? "☀️ day" : "🌙 night"} · ${when}`;
     });
   }
@@ -114,6 +148,12 @@
     return [icon, words];
   }
   const deg = (n) => (n === null || n === undefined || Number.isNaN(n) ? "–" : `${Math.round(n)}°`);
+  // Show both °F and °C (weather comes in the unit set in config.js)
+  const isF = C.temperatureUnit === "fahrenheit";
+  const toF = (n) => (n === null || n === undefined ? n : isF ? n : n * 9 / 5 + 32);
+  const toC = (n) => (n === null || n === undefined ? n : isF ? (n - 32) * 5 / 9 : n);
+  const degF = (n) => deg(toF(n)) + "F";
+  const degC = (n) => deg(toC(n)) + "C";
 
   const CACHE_MINUTES = 30;
   let cities = store.get("lp.cities", C.cities);
@@ -227,9 +267,11 @@
         return el("div", { class: "city" },
           el("button", { class: "remove", type: "button", title: `Remove ${c.name}`, "aria-label": `Remove ${c.name}`, onclick: () => removeCity(i) }, "✕"),
           el("div", { class: "name" }, c.name),
-          el("div", { class: "now" }, el("span", { class: "icon" }, icon), deg(w.current.temperature_2m)),
+          el("div", { class: "now" }, el("span", { class: "icon" }, icon), degF(w.current.temperature_2m),
+            el("span", { class: "c" }, degC(w.current.temperature_2m))),
           el("div", { class: "desc" }, words),
-          el("div", { class: "hl" }, `H ${deg(w.daily.temperature_2m_max[0])}  L ${deg(w.daily.temperature_2m_min[0])}`),
+          el("div", { class: "hl" }, `H ${degF(w.daily.temperature_2m_max[0])}  L ${degF(w.daily.temperature_2m_min[0])}`),
+          el("div", { class: "hl c-line" }, `H ${degC(w.daily.temperature_2m_max[0])}  L ${degC(w.daily.temperature_2m_min[0])}`),
           rainBadge(w.daily.precipitation_probability_max[0]));
       })));
     } else {
@@ -243,7 +285,8 @@
             const [icon, words] = look(d.weather_code[k]);
             return el("td", { title: words },
               el("span", { class: "icon" }, icon),
-              el("span", { class: "hl" }, deg(d.temperature_2m_max[k]), " ", el("span", { class: "lo" }, deg(d.temperature_2m_min[k]))),
+              el("span", { class: "hl" }, deg(toF(d.temperature_2m_max[k])), " ", el("span", { class: "lo" }, deg(toF(d.temperature_2m_min[k]))), el("span", { class: "unit" }, "F")),
+              el("span", { class: "hl c-line" }, deg(toC(d.temperature_2m_max[k])), " ", deg(toC(d.temperature_2m_min[k])), el("span", { class: "unit" }, "C")),
               rainBadge(d.precipitation_probability_max[k]));
           }));
       });
@@ -310,6 +353,9 @@
   // ---------- wire up ----------
   function start() {
     renderGreeting();
+    $("#cal-prev").addEventListener("click", () => moveCalendar(-1));
+    $("#cal-next").addEventListener("click", () => moveCalendar(1));
+    $("#cal-title").addEventListener("click", () => { const n = new Date(); calShown = { y: n.getFullYear(), m: n.getMonth() }; renderCalendar(); });
     buildClocks();
     renderLinks();
     renderTodos();

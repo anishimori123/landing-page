@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.1.1",
+  version: "1.2.0",
   name: "Atsuwwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)

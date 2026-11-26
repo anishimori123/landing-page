@@ -6,13 +6,23 @@
   <meta name="theme-color" content="#0e1014">
   <title>Atsushi's landing page</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=1.1.1">
+  <link rel="stylesheet" href="css/style.css?v=1.2.0">
 </head>
 <body>
   <main class="page">
     <header class="top">
-      <h1 id="greeting">Hello</h1>
-      <div id="today" class="muted"></div>
+      <div class="hello">
+        <h1 id="greeting">Hello</h1>
+        <div id="today" class="muted"></div>
+      </div>
+      <div class="mini-cal" aria-label="Calendar">
+        <div class="cal-head">
+          <button type="button" id="cal-prev" class="cal-nav" aria-label="Previous month">‹</button>
+          <button type="button" id="cal-title" class="cal-title" title="Back to this month"></button>
+          <button type="button" id="cal-next" class="cal-nav" aria-label="Next month">›</button>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+      </div>
     </header>
 
     <form class="search" action="https://www.google.com/search" method="get" role="search">
@@ -72,7 +82,7 @@
     </footer>
   </main>
 
-  <script src="js/config.js?v=1.1.1"></script>
-  <script src="js/app.js?v=1.1.1"></script>
+  <script src="js/config.js?v=1.2.0"></script>
+  <script src="js/app.js?v=1.2.0"></script>
 </body>
 </html>

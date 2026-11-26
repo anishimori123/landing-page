@@ -10,6 +10,7 @@
   --good: #9ece6a;
   --rain: #7dcfff;
   --night: #bb9af7;
+  --yellow: #f5c542;
   --radius: 14px;
 }
 * { box-sizing: border-box; }
@@ -24,7 +25,21 @@ h2 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
 .spaced { margin-top: 16px; }
 
 .page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; display: grid; gap: 14px; }
-.top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+.top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
+.hello { display: grid; gap: 4px; padding-top: 6px; min-width: 0; }
+.nick { color: var(--yellow); }
+
+/* Mini calendar (top right) */
+.mini-cal { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 8px 10px; width: 236px; }
+.cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.cal-title { background: none; border: 0; font-weight: 600; font-size: 14px; padding: 2px 6px; }
+.cal-nav { background: none; border: 0; color: var(--muted); font-size: 18px; line-height: 1; width: 26px; height: 26px; padding: 0; }
+.cal-nav:hover, .cal-title:hover { color: var(--accent); }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 12px; }
+.cal-dow { color: var(--muted); font-size: 11px; padding: 2px 0; }
+.cal-day { padding: 4px 0; border-radius: 6px; font-variant-numeric: tabular-nums; }
+.cal-day.weekend { color: var(--muted); }
+.cal-day.today { background: var(--yellow); color: #0e1014; font-weight: 700; }
 
 .search { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 4px 16px; }
 .search input { flex: 1; background: transparent; border: 0; color: var(--text); font-size: 16px; padding: 10px 0; outline: none; }
@@ -53,6 +68,14 @@ button:hover { border-color: var(--accent); }
 .clock .time { font-size: 28px; font-weight: 600; letter-spacing: .5px; font-variant-numeric: tabular-nums; }
 .clock .sub { font-size: 12px; color: var(--muted); }
 .clock.night .time { color: var(--night); }
+.clock .time .sec { font-size: 0.6em; opacity: .75; }
+
+/* °F big, °C next to it in smaller grey */
+.city .now .c { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 8px; }
+.c-line { color: var(--muted); font-size: 12px; }
+.week td .hl { display: block; }
+.week td .c-line { font-size: 11px; }
+.unit { font-size: 10px; color: var(--muted); margin-left: 1px; }
 
 /* Weather: today */
 .weather-today { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }

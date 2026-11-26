@@ -25,9 +25,18 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.2.0**](#v120--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 📅 Mini calendar, yellow nickname, seconds on clocks, °F + °C |
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.2.0 — 2026-11-25 (time spent: ~15 min)
+- **What changed:**
+  - 📅 Top right: a **mini calendar** of this month with **today highlighted in yellow**. ‹ › browse months; clicking the month name jumps back to today.
+  - 😎 My nickname in the greeting is now **yellow**.
+  - 🕐 Clocks show **seconds** (a bit smaller, like 9:47:34 PM).
+  - 🌡️ Weather shows **°F and °C**: °F big with °C next to it, high/low in both, and both in the 7-day table.
+- **Why:** I asked for all four, to make the page easier to read at a glance.
 
 ## v1.1.1 — 2026-11-25 (time spent: ~3 min)
 - **What changed:** The greeting at the top now says "Good evening, Atsuwwatti Escobar Nishiburton" (my nickname), set in `js/config.js`.
