@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.4.2**](#v142--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 🤏 Smaller, more compact calendar |
 | [**v1.4.1**](#v141--2026-11-25-time-spent-5-min) | 2026-11-25 | 5 min | ↔️ Shorter search on the left, calendar on the right |
 | [**v1.4.0**](#v140--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🗓️ Month view with event boxes, like my phone's calendar widget |
 | [**v1.3.2**](#v132--2026-11-25-time-spent-2-min) | 2026-11-25 | 2 min | ⬆️ My calendar card moved above the clocks |
@@ -35,6 +36,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.4.2 — 2026-11-25 (time spent: ~3 min)
+- **What changed:** The month calendar is more compact: shorter day boxes (96 → 64px), a smaller month title, ‹ › arrows and ＋ button, and smaller day numbers and event boxes. It also takes a bit less width on the right (left/right = 1 : 1.15).
+- **Why:** The calendar felt too big next to the search and clocks.
 
 ## v1.4.1 — 2026-11-25 (time spent: ~5 min)
 - **What changed:** New top layout on computers: **left** = greeting, date, a shorter search box and the 4 clocks (2×2); **right** = the month calendar. Page width up to 1200px. On narrow screens and phones it stacks: greeting → search → calendar → clocks.
