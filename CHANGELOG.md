@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.5.2**](#v152--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | ➖ Removed the Nikkei Asia tab |
 | [**v1.5.1**](#v151--2026-11-25-time-spent-10-min) | 2026-11-25 | 10 min | 🗞️ Nikkei Asia tab in the News box |
 | [**v1.5.0**](#v150--2026-11-25-time-spent-20-min) | 2026-11-25 | 20 min | 📰 News box: Bloomberg headlines by genre |
 | [**v1.4.4**](#v144--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | 💙 Date under my name in light blue |
@@ -40,6 +41,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.5.2 — 2026-11-25 (time spent: ~1 min)
+- **What changed:** Removed the Nikkei Asia tab from the News box (Bloomberg only again).
+- **Why:** Nikkei Asia needs a separate subscription from my Japanese Nikkei (日経電子版) login.
 
 ## v1.5.1 — 2026-11-25 (time spent: ~10 min)
 - **What changed:** Added a **Nikkei Asia** tab (English edition, official RSS feed `asia.nikkei.com/rss/feed/nar`) next to Bloomberg in the News box, with the latest 10 headlines. That feed doesn't include publish times, so no "min ago" is shown.
