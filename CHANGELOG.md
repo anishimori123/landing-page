@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.4.4**](#v144--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | 💙 Date under my name in light blue |
 | [**v1.4.3**](#v143--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | ✏️ Nickname spelling: Atsuwatti |
 | [**v1.4.2**](#v142--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 🤏 Smaller, more compact calendar |
 | [**v1.4.1**](#v141--2026-11-25-time-spent-5-min) | 2026-11-25 | 5 min | ↔️ Shorter search on the left, calendar on the right |
@@ -37,6 +38,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.4.4 — 2026-11-25 (time spent: ~1 min)
+- **What changed:** The date under my name (like "Wednesday, November 25, 2026") is now light blue instead of grey.
+- **Why:** Easier to see, and it goes well with the yellow nickname.
 
 ## v1.4.3 — 2026-11-25 (time spent: ~1 min)
 - **What changed:** The greeting now says "Atsuwatti Escobar Nishiburton" (one "w" fewer).

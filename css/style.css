@@ -35,6 +35,7 @@ h2 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
 .top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; }
 .hello { display: grid; gap: 4px; padding-top: 6px; min-width: 0; }
 .nick { color: var(--yellow); }
+#today { color: #7dcfff; }
 
 /* My calendar: month view like the phone widget */
 .mg-head { margin-bottom: 6px; }
