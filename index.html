@@ -6,23 +6,25 @@
   <meta name="theme-color" content="#0e1014">
   <title>Atsushi's landing page</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
-  <link rel="stylesheet" href="css/style.css?v=1.4.0">
+  <link rel="stylesheet" href="css/style.css?v=1.4.1">
 </head>
 <body>
   <main class="page">
+    <div class="top-grid">
     <header class="top">
       <div class="hello">
         <h1 id="greeting">Hello</h1>
         <div id="today" class="muted"></div>
       </div>
     </header>
-
     <form class="search" action="https://www.google.com/search" method="get" role="search">
       <span aria-hidden="true">🔍</span>
       <input id="search" name="q" type="search" placeholder="Search Google" autocomplete="off" aria-label="Search Google">
     </form>
-
-    <section class="card" aria-labelledby="gcal-title">
+    <section class="clocks-area" aria-label="World clocks">
+      <div id="clocks" class="clocks"></div>
+    </section>
+    <section class="card cal-card" aria-labelledby="gcal-title">
       <div class="card-head mg-head">
         <h2 id="gcal-title" class="mg-title"><button type="button" id="cal-title" class="cal-title" title="Back to this month"></button></h2>
         <div class="month-nav">
@@ -38,10 +40,7 @@
       <div id="month-grid" class="month-grid"></div>
       <div id="gcal-body" class="gcal-body"></div>
     </section>
-
-    <section aria-label="World clocks">
-      <div id="clocks" class="clocks"></div>
-    </section>
+    </div>
 
     <section class="card" aria-labelledby="weather-title">
       <div class="card-head">
@@ -92,9 +91,9 @@
     </footer>
   </main>
 
-  <script src="js/config.js?v=1.4.0"></script>
-  <script src="js/app.js?v=1.4.0"></script>
+  <script src="js/config.js?v=1.4.1"></script>
+  <script src="js/app.js?v=1.4.1"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/calendar.js?v=1.4.0"></script>
+  <script src="js/calendar.js?v=1.4.1"></script>
 </body>
 </html>
