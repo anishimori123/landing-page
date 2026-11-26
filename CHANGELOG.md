@@ -25,10 +25,15 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.2.1**](#v121--2026-11-25-time-spent-2-min) | 2026-11-25 | 2 min | 📊 Myojin spreadsheet link in My projects |
 | [**v1.2.0**](#v120--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 📅 Mini calendar, yellow nickname, seconds on clocks, °F + °C |
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.2.1 — 2026-11-25 (time spent: ~2 min)
+- **What changed:** Added a "Myojin sheet" button (my Myojin test Google Sheet) to **My projects**, next to Myojin.
+- **Why:** One click to my trading sheet from the start page. The link only opens for people the sheet is shared with.
 
 ## v1.2.0 — 2026-11-25 (time spent: ~15 min)
 - **What changed:**

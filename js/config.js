@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.2.0",
+  version: "1.2.1",
   name: "Atsuwwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -63,6 +63,7 @@ window.CONFIG = {
   projects: [
     { name: "agent", note: "my brain", url: "https://github.com/anishimori123/agent" },
     { name: "Myojin", note: "trading bots", url: "https://github.com/anishimori123/Myojin" },
+    { name: "Myojin sheet", note: "test spreadsheet", url: "https://docs.google.com/spreadsheets/d/1tOl09Ill4jKm9hig-9r-oT2gvQVX_Dwg7Z9WKoGEglM/edit?gid=0#gid=0" },
     { name: "AtsuMail", note: "mail reader", url: "https://github.com/anishimori123/AtsuMail" },
     { name: "landing-page", note: "this page", url: "https://github.com/anishimori123/landing-page" },
   ],
