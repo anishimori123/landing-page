@@ -13,6 +13,7 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
   - **Today** view: now, high/low, rain chance (when 30% or more)
   - **7 days** view: a table comparing every city for the week
   - ＋ add any city, ✕ remove one (remembered in this browser)
+- 📰 **News:** Bloomberg headlines by genre (official RSS via rss2json.com); click to read on Bloomberg
 - ✅ **To-do list:** type and press Enter, tick, delete, "Clear done"
 - 🗂️ **My projects** and 🔗 **quick links**
 
@@ -40,6 +41,7 @@ They don't sync between my PC and phone.
 | `js/config.js` | **My settings:** clocks, starting cities, projects, quick links. Edit this one |
 | `js/app.js` | How everything works |
 | `js/calendar.js` | My Google Calendar card (sign-in, events, add/change/delete) |
+| `js/news.js` | News box (sources, genres, headlines) |
 | `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
 | `stats/code-lines.json` | Lines of code per version (for the chart) |
 

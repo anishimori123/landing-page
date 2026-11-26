@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.5.0**](#v150--2026-11-25-time-spent-20-min) | 2026-11-25 | 20 min | 📰 News box: Bloomberg headlines by genre |
 | [**v1.4.4**](#v144--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | 💙 Date under my name in light blue |
 | [**v1.4.3**](#v143--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | ✏️ Nickname spelling: Atsuwatti |
 | [**v1.4.2**](#v142--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 🤏 Smaller, more compact calendar |
@@ -38,6 +39,11 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.5.0 — 2026-11-25 (time spent: ~20 min)
+- **What changed:** New **📰 News** box under the weather. There's one tab per source (first: **Bloomberg**) and genre buttons (Markets, Technology, Economics, Politics, Business, Crypto, Opinion), showing the latest 10 headlines with how long ago each was posted. Clicking opens the article on Bloomberg (where I'm logged in). Headlines are saved for 15 minutes; if a refresh fails, the last ones stay. Sources and genres live in `js/config.js` (`news`).
+  The page reads Bloomberg's official RSS feeds through **rss2json.com** (free, no account), because browsers can't read Bloomberg's feeds directly. Only headlines and links are shown, never article text, and my Bloomberg login isn't used (Bloomberg's terms don't allow automated access).
+- **Why:** I want my news by genre on my start page.
 
 ## v1.4.4 — 2026-11-25 (time spent: ~1 min)
 - **What changed:** The date under my name (like "Wednesday, November 25, 2026") is now light blue instead of grey.

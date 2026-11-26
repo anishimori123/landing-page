@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.4.4",
+  version: "1.5.0",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -80,6 +80,24 @@ window.CONFIG = {
     { name: "Alpaca", url: "https://app.alpaca.markets/" },
     { name: "AtsuMail", url: "https://anishimori123.github.io/AtsuMail/" },
   ],
+
+  // News box: one tab per source, one button per genre (official RSS feeds).
+  // Only headlines and links are shown; click to read on the publisher's site.
+  news: [
+    {
+      source: "Bloomberg",
+      genres: [
+        { name: "Markets", url: "https://www.bloomberg.com/feeds/markets/news.rss" },
+        { name: "Technology", url: "https://www.bloomberg.com/feeds/technology/news.rss" },
+        { name: "Economics", url: "https://www.bloomberg.com/feeds/economics/news.rss" },
+        { name: "Politics", url: "https://www.bloomberg.com/feeds/politics/news.rss" },
+        { name: "Business", url: "https://www.bloomberg.com/feeds/business/news.rss" },
+        { name: "Crypto", url: "https://www.bloomberg.com/feeds/crypto/news.rss" },
+        { name: "Opinion", url: "https://www.bloomberg.com/feeds/bview/news.rss" },
+      ],
+    },
+  ],
+  newsPerGenre: 10,
 
   // To-dos shown the very first time (after that, your own list is kept)
   starterTodos: ["Watch movies"],

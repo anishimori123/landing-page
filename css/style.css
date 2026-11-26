@@ -200,3 +200,14 @@ footer { text-align: center; padding-top: 6px; }
   .clock .time { font-size: 24px; }
   h1 { font-size: 22px; }
 }
+
+/* News box */
+.news-genres { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.pill { border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+.pill.on { background: var(--accent); border-color: var(--accent); color: #0e1014; font-weight: 600; }
+.news-list ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+.news-list li { line-height: 1.4; }
+.news-list li::marker { color: var(--muted); font-size: 12px; }
+.news-list a { color: var(--text); }
+.news-list a:hover { color: var(--accent); }
+.news-time { color: var(--muted); font-size: 12px; margin-left: 8px; white-space: nowrap; }
