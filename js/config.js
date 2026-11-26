@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.5.2",
+  version: "1.6.0",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -95,6 +95,23 @@ window.CONFIG = {
         { name: "Crypto", url: "https://www.bloomberg.com/feeds/crypto/news.rss" },
         { name: "Opinion", url: "https://www.bloomberg.com/feeds/bview/news.rss" },
       ],
+    },
+    {
+      // Nikkei has no headline feed, so this tab is quick buttons to the real
+      // Nikkei pages (I'm logged in there) plus Nikkei's own search.
+      source: "日経",
+      links: [
+        { name: "トップ", url: "https://www.nikkei.com/" },
+        { name: "速報", url: "https://www.nikkei.com/news/category/" },
+        { name: "マーケット", url: "https://www.nikkei.com/markets/" },
+        { name: "テック", url: "https://www.nikkei.com/technology/" },
+        { name: "ビジネス", url: "https://www.nikkei.com/business/" },
+        { name: "経済", url: "https://www.nikkei.com/economy/" },
+        { name: "国際", url: "https://www.nikkei.com/international/" },
+        { name: "朝刊・夕刊", url: "https://www.nikkei.com/paper/" },
+        { name: "Myニュース", url: "https://www.nikkei.com/mynews/" },
+      ],
+      search: "https://www.nikkei.com/search?keyword=",
     },
   ],
   newsPerGenre: 10,

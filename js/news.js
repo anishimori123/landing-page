@@ -19,7 +19,7 @@
 
   let pick = store.get("lp.news.pick", { s: 0, g: 0 });
   if (!SOURCES[pick.s]) pick = { s: 0, g: 0 };
-  if (SOURCES[pick.s] && !SOURCES[pick.s].genres[pick.g]) pick.g = 0;
+  if (SOURCES[pick.s] && SOURCES[pick.s].genres && !SOURCES[pick.s].genres[pick.g]) pick.g = 0;
   let loadId = 0;
 
   const genre = () => SOURCES[pick.s].genres[pick.g];
@@ -43,11 +43,30 @@
 
   const safeLink = (u) => (/^https?:\/\//i.test(u || "") ? u : null);
 
+  // A "links" source (like 日経): big buttons to the real site + its search box
+  function renderLinks(src) {
+    $("#news-genres").replaceChildren();
+    $("#news-updated").textContent = "Opens the real pages in a new tab (you stay logged in there).";
+    const form = src.search ? el("form", { class: "news-search", role: "search",
+      onsubmit: (ev) => {
+        ev.preventDefault();
+        const q = form.elements.q.value.trim();
+        if (q) window.open(src.search + encodeURIComponent(q), "_blank", "noopener");
+      } },
+      el("input", { name: "q", type: "search", placeholder: `${src.source}で検索`, "aria-label": `Search ${src.source}` }),
+      el("button", { type: "submit" }, "検索")) : null;
+    $("#news-list").replaceChildren(
+      el("div", { class: "news-links" }, src.links.map((l) =>
+        el("a", { class: "news-link", href: l.url, target: "_blank", rel: "noopener" }, l.name))),
+      form);
+  }
+
   function renderTabs() {
     $("#news-sources").replaceChildren(...SOURCES.map((src, i) => el("button", {
       type: "button", role: "tab", class: i === pick.s ? "on" : "", "aria-selected": String(i === pick.s),
       onclick: () => { pick = { s: i, g: 0 }; store.set("lp.news.pick", pick); renderTabs(); load(); },
     }, src.source)));
+    if (SOURCES[pick.s].links) return;
     $("#news-genres").replaceChildren(...SOURCES[pick.s].genres.map((g, i) => el("button", {
       type: "button", role: "tab", class: "pill" + (i === pick.g ? " on" : ""), "aria-selected": String(i === pick.g),
       onclick: () => { pick.g = i; store.set("lp.news.pick", pick); renderTabs(); load(); },
@@ -69,6 +88,7 @@
 
   async function load(force = false) {
     if (!SOURCES.length) { $("#news-list").replaceChildren(el("p", { class: "muted" }, "No news sources in config.js.")); return; }
+    if (SOURCES[pick.s].links) { renderLinks(SOURCES[pick.s]); return; }
     const g = genre();
     const key = "lp.news.cache." + g.url;
     const cached = store.get(key, null);
