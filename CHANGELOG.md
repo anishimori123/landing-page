@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.4.0**](#v140--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🗓️ Month view with event boxes, like my phone's calendar widget |
 | [**v1.3.2**](#v132--2026-11-25-time-spent-2-min) | 2026-11-25 | 2 min | ⬆️ My calendar card moved above the clocks |
 | [**v1.3.1**](#v131--2026-11-25-time-spent-5-min) | 2026-11-25 | 5 min | 🔏 Privacy policy page (needed by Google) |
 | [**v1.3.0**](#v130--2026-11-25-time-spent-45-min) | 2026-11-25 | 45 min | 📅 My Google Calendar: see, add, change, delete events |
@@ -33,6 +34,15 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.4.0 — 2026-11-25 (time spent: ~25 min)
+- **What changed:**
+  - 🗓️ **My calendar** is now a **month view**, styled after my phone's Google Calendar widget: big month name, ‹ › arrows, a round **＋** button, grid lines, and **filled colored event boxes** with the event name inside each day (up to 3, then "+N more"). Today's number sits in a white circle.
+  - **Click an event box** to change or delete it. **Click a day** to see its events listed under the grid, with "＋ Add on this day".
+  - On the phone, the boxes stay, just smaller.
+  - The small calendar at the top right was removed; the month view replaces it.
+  - Tested: 31 calendar checks passed.
+- **Why:** I want to see my events inside the calendar at a glance, like on my phone's home screen.
 
 ## v1.3.2 — 2026-11-25 (time spent: ~2 min)
 - **What changed:** The **My calendar** card now sits right under the search bar, above the clocks. First sign-in worked after switching the Google app to **In production** (Branding: home page + privacy policy).

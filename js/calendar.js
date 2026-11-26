@@ -1,11 +1,11 @@
-// "My calendar": shows and edits my Google Calendar events.
-// Sign-in uses Google's own window. Events go straight from Google to this
-// browser; nothing is saved in the repo. Settings: googleClientId in config.js.
+// "My calendar": a month view of my Google Calendar, like a phone calendar widget.
+// Each day shows small event boxes; click a day for details, click an event to
+// change or delete it. Sign-in uses Google's own window. Events go straight from
+// Google to this browser; nothing is saved in the repo. Settings: config.js.
 (() => {
   "use strict";
   const C = window.CONFIG;
-  const LP = window.LP;
-  const el = LP.el;
+  const el = window.LP.el;
   const $ = (sel) => document.querySelector(sel);
 
   const API = "https://www.googleapis.com/calendar/v3";
@@ -13,7 +13,7 @@
     "https://www.googleapis.com/auth/calendar.readonly", // see all my calendars
     "https://www.googleapis.com/auth/calendar.events",   // add, change, delete events
   ];
-  const DAYS_AHEAD = C.calendarDaysAhead || 7;
+  const MAX_BOXES = 3; // event boxes per day before "+N more"
   const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   let token = null;        // { access_token, expires_at }
@@ -21,9 +21,11 @@
   let calendars = [];      // { id, name, color, primary, writable }
   let events = [];         // normalized events
   let fetched = null;      // { from, to } range already loaded
-  let selectedDay = null;  // "YYYY-MM-DD" when a day is clicked, else null = next 7 days
+  let shown = { y: new Date().getFullYear(), m: new Date().getMonth() }; // month on screen
+  let selectedDay = null;  // "YYYY-MM-DD" clicked, else today
   let editing = null;      // event being edited, or a new draft
   let busy = false;
+  let todayKeyNow = "";
 
   // ---------- small helpers ----------
   const pad = (n) => String(n).padStart(2, "0");
@@ -34,6 +36,7 @@
   const timeOf = (d) => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
   const fmtTime = (d) => d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   const safeColor = (c) => (/^#[0-9a-f]{3,8}$/i.test(c || "") ? c : "#7aa2f7");
+  const activeDay = () => selectedDay || dayKey(today0());
 
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
@@ -48,6 +51,79 @@
     $("#gcal-add").hidden = !signedIn;
     $("#gcal-refresh").hidden = !signedIn;
     $("#gcal-signout").hidden = !signedIn;
+  }
+
+  // ---------- month grid ----------
+  function gridRange() {
+    const first = new Date(shown.y, shown.m, 1);
+    const from = addDays(first, -first.getDay()); // Sunday before the 1st
+    const last = new Date(shown.y, shown.m + 1, 0);
+    const to = addDays(last, 7 - last.getDay());   // day after the Saturday after the last day
+    return { from, to };
+  }
+
+  // White or dark text, whichever reads better on the event color
+  function textOn(hex) {
+    let h = hex.replace("#", "");
+    if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+    const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
+    return 0.299 * r + 0.587 * g + 0.114 * b > 0.62 ? "#10131a" : "#ffffff";
+  }
+
+  function eventBox(e) {
+    return el("button", {
+      type: "button",
+      class: "ev-box",
+      style: `background:${e.color};color:${textOn(e.color)}`,
+      title: `${e.allDay ? "All day" : fmtTime(e.start) + " – " + fmtTime(e.end)} · ${e.title}${e.location ? " · " + e.location : ""}`,
+      onclick: (ev) => { ev.stopPropagation(); openForm(e); },
+    }, e.title);
+  }
+
+  function renderGrid() {
+    const first = new Date(shown.y, shown.m, 1);
+    $("#cal-title").textContent = first.toLocaleDateString("en-US",
+      first.getFullYear() === new Date().getFullYear() ? { month: "long" } : { month: "long", year: "numeric" });
+    const { from, to } = gridRange();
+    const tKey = dayKey(today0());
+    const cells = ["S", "M", "T", "W", "T", "F", "S"].map((d) => el("div", { class: "mg-dow" }, d));
+    for (let d = from; d < to; d = addDays(d, 1)) {
+      const key = dayKey(d);
+      const list = token ? eventsOn(d) : [];
+      const inMonth = d.getMonth() === shown.m;
+      const boxes = list.slice(0, MAX_BOXES).map(eventBox);
+      const more = list.length > MAX_BOXES ? el("div", { class: "ev-more" }, `+${list.length - MAX_BOXES} more`) : null;
+      cells.push(el("div", {
+        class: "mg-day" + (inMonth ? "" : " other") + (key === tKey ? " today" : "") +
+          (token && key === activeDay() ? " selected" : "") + (d.getDay() === 0 || d.getDay() === 6 ? " weekend" : ""),
+        role: "button", tabindex: "0",
+        "aria-label": d.toDateString() + (list.length ? `, ${list.length} event${list.length > 1 ? "s" : ""}` : ""),
+        onclick: () => pickDay(key),
+        onkeydown: (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); pickDay(key); } },
+      },
+        el("div", { class: "mg-num" }, el("span", {}, d.getDate())),
+        boxes, more));
+    }
+    $("#month-grid").replaceChildren(...cells);
+  }
+
+  function pickDay(key) {
+    if (!token) {
+      const d = parseDay(key);
+      window.open(`https://calendar.google.com/calendar/u/0/r/day/${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`, "_blank", "noopener");
+      return;
+    }
+    selectedDay = key;
+    editing = null;
+    renderGrid();
+    render();
+  }
+
+  function moveMonth(step) {
+    const d = new Date(shown.y, shown.m + step, 1);
+    shown = { y: d.getFullYear(), m: d.getMonth() };
+    renderGrid();
+    if (token) refresh();
   }
 
   // ---------- sign-in ----------
@@ -92,17 +168,17 @@
     token = null;
     store.set("lp.gcal.token", null);
     store.set("lp.gcal.connected", null);
-    calendars = []; events = []; fetched = null; editing = null;
-    LP.setEventDays(new Set());
+    calendars = []; events = []; fetched = null; editing = null; selectedDay = null;
     signedOutView();
   }
 
   function signedOutView(message) {
     setTools(false);
+    renderGrid();
     const again = store.get("lp.gcal.connected");
     note(message || (again
       ? "Your Google sign-in timed out (Google allows about 1 hour). One click to reconnect."
-      : "Sign in with Google to see and edit your calendar here."),
+      : "Sign in with Google to see and edit your events in this calendar. (Until then, clicking a day opens Google Calendar.)"),
       el("button", { type: "button", class: "google-btn", onclick: signIn }, again ? "🔄 Reconnect Google Calendar" : "🔐 Sign in with Google"));
   }
 
@@ -128,18 +204,16 @@
   }
 
   function wantedRange() {
+    const r = gridRange();
     const t = today0();
-    const { y, m } = LP.getShownMonth();
-    let from = new Date(y, m, 1);
-    let to = new Date(y, m + 1, 1);
-    if (t < from) from = t;
-    if (addDays(t, DAYS_AHEAD) > to) to = addDays(t, DAYS_AHEAD);
+    if (t < r.from) r.from = t;
+    if (addDays(t, 1) > r.to) r.to = addDays(t, 1);
     if (selectedDay) {
       const d = parseDay(selectedDay);
-      if (d < from) from = d;
-      if (addDays(d, 1) > to) to = addDays(d, 1);
+      if (d < r.from) r.from = d;
+      if (addDays(d, 1) > r.to) r.to = addDays(d, 1);
     }
-    return { from, to };
+    return r;
   }
   const haveRange = (r) => fetched && fetched.from <= r.from && fetched.to >= r.to;
 
@@ -165,7 +239,7 @@
     if (!token) { signedOutView(); return; }
     setTools(true);
     const range = wantedRange();
-    if (!force && haveRange(range)) { render(); return; }
+    if (!force && haveRange(range)) { renderGrid(); render(); return; }
     if (!events.length) note("Loading your calendar…");
     try {
       if (!calendars.length || force) {
@@ -188,7 +262,7 @@
           .catch((err) => { if (err.auth) throw err; console.warn("Calendar skipped:", cal.name, err.message); return []; })));
       events = lists.flat().sort((a, b) => (a.allDay === b.allDay ? a.start - b.start : a.allDay ? -1 : 1));
       fetched = range;
-      LP.setEventDays(eventDays());
+      renderGrid();
       render();
     } catch (err) {
       if (err.auth) { signedOutView(); return; }
@@ -203,30 +277,17 @@
     return events.filter((e) => e.start < to && (e.end > from || (e.end.getTime() === e.start.getTime() && e.start >= from)));
   }
 
-  function eventDays() {
-    const days = new Set();
-    for (const e of events) {
-      let d = new Date(e.start.getFullYear(), e.start.getMonth(), e.start.getDate());
-      const last = e.allDay ? addDays(e.end, -1) : e.end;
-      for (let i = 0; d <= last && i < 62; i++, d = addDays(d, 1)) {
-        if (eventsOn(d).includes(e)) days.add(dayKey(d));
-      }
-    }
-    return days;
-  }
-
-  // ---------- list view ----------
+  // ---------- day details (below the grid) ----------
   function dayTitle(d) {
     const t = today0();
-    const label = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+    const label = d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" });
     if (dayKey(d) === dayKey(t)) return "Today · " + label;
     if (dayKey(d) === dayKey(addDays(t, 1))) return "Tomorrow · " + label;
     return label;
   }
 
   function eventRow(e) {
-    let when = "All day";
-    if (!e.allDay) when = `${fmtTime(e.start)} – ${fmtTime(e.end)}`;
+    const when = e.allDay ? "All day" : `${fmtTime(e.start)} – ${fmtTime(e.end)}`;
     return el("button", {
       type: "button", class: "gcal-event",
       title: e.writable ? "Click to change or delete" : `${e.calName} (view only)`,
@@ -240,26 +301,13 @@
   function render() {
     if (!token) { signedOutView(); return; }
     if (editing) { show(formView()); return; }
-    const t = today0();
-    const days = selectedDay ? [parseDay(selectedDay)] : [...Array(DAYS_AHEAD)].map((_, i) => addDays(t, i));
-    const groups = [];
-    for (const d of days) {
-      const list = eventsOn(d);
-      if (!list.length && !selectedDay && dayKey(d) !== dayKey(t)) continue; // skip empty days, but always show Today
-      groups.push(el("div", { class: "gcal-day" },
-        el("div", { class: "gcal-date" + (dayKey(d) === dayKey(t) ? " is-today" : "") }, dayTitle(d)),
-        list.length ? list.map(eventRow) : el("div", { class: "gcal-none" }, "No events")));
-    }
-    const head = selectedDay
-      ? el("div", { class: "gcal-note" }, "Showing one day. ",
-          el("button", { type: "button", class: "link-btn", onclick: () => { selectedDay = null; LP.selectDay(null); render(); } }, `Show next ${DAYS_AHEAD} days`),
-          " · ",
-          el("button", { type: "button", class: "link-btn", onclick: () => openForm(null, parseDay(selectedDay)) }, "＋ Add on this day"))
-      : null;
-    if (!selectedDay && groups.length === 1 && !eventsOn(t).length) {
-      groups.push(el("p", { class: "muted tiny" }, `Nothing else in the next ${DAYS_AHEAD} days.`));
-    }
-    show(head, groups);
+    const d = parseDay(activeDay());
+    const list = eventsOn(d);
+    show(el("div", { class: "gcal-day" },
+      el("div", { class: "gcal-day-head" },
+        el("span", { class: "gcal-date" + (dayKey(d) === dayKey(today0()) ? " is-today" : "") }, dayTitle(d)),
+        el("button", { type: "button", class: "link-btn", onclick: () => openForm(null, d) }, "＋ Add on this day")),
+      list.length ? list.map(eventRow) : el("div", { class: "gcal-none" }, "No events")));
   }
 
   // ---------- add / change / delete ----------
@@ -267,7 +315,7 @@
     if (e) {
       editing = { ...e };
     } else {
-      const base = day || today0();
+      const base = day || parseDay(activeDay());
       const now = new Date();
       let start = new Date(base.getFullYear(), base.getMonth(), base.getDate(), now.getHours() + 1, 0);
       if (dayKey(base) !== dayKey(now)) start = new Date(base.getFullYear(), base.getMonth(), base.getDate(), 9, 0);
@@ -275,8 +323,9 @@
       editing = { isNew: true, allDay: false, title: "", location: "", start, end: new Date(start.getTime() + 3600e3), calId: primary ? primary.id : "primary", writable: true };
     }
     render();
-    const first = body().querySelector("input");
+    const first = body().querySelector("input:not([disabled])");
     if (first) first.focus();
+    if (body().scrollIntoView) body().scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
   function formView() {
@@ -334,7 +383,7 @@
       data.end = { dateTime: end.toISOString(), timeZone: TZ };
     }
     const calId = f.elements.calId ? f.elements.calId.value : editing.calId;
-    return { data, calId };
+    return { data, calId, day: sd };
   }
 
   async function save(f) {
@@ -355,6 +404,9 @@
         await api(`/calendars/${cal}/events/${encodeURIComponent(editing.id)}`, { method: "PATCH", data: r.data });
       }
       editing = null;
+      selectedDay = r.day; // show the day the event is on
+      const d = parseDay(r.day);
+      shown = { y: d.getFullYear(), m: d.getMonth() };
       await refresh(true);
     } catch (err) {
       if (err.auth) { editing = null; signedOutView(); return; }
@@ -391,32 +443,31 @@
 
   // ---------- wire up ----------
   function start() {
-    if (!C.googleClientId) { note("Google Calendar isn't set up (googleClientId is empty in config.js)."); return; }
-    $("#gcal-add").addEventListener("click", () => openForm(null, selectedDay ? parseDay(selectedDay) : null));
+    todayKeyNow = dayKey(today0());
+    $("#cal-prev").addEventListener("click", () => moveMonth(-1));
+    $("#cal-next").addEventListener("click", () => moveMonth(1));
+    $("#cal-title").addEventListener("click", () => {
+      const n = new Date();
+      shown = { y: n.getFullYear(), m: n.getMonth() };
+      selectedDay = null;
+      renderGrid();
+      if (token) refresh(); else signedOutView();
+    });
+    if (!C.googleClientId) { renderGrid(); note("Google Calendar isn't set up (googleClientId is empty in config.js)."); return; }
+    $("#gcal-add").addEventListener("click", () => openForm(null));
     $("#gcal-refresh").addEventListener("click", () => refresh(true));
     $("#gcal-signout").addEventListener("click", signOut);
 
-    // Mini calendar: click a day = show that day (or open Google Calendar when signed out)
-    window.addEventListener("lp:day", (ev) => {
-      const key = ev.detail;
-      if (!token) {
-        const d = parseDay(key);
-        window.open(`https://calendar.google.com/calendar/u/0/r/day/${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`, "_blank", "noopener");
-        return;
-      }
-      selectedDay = selectedDay === key ? null : key;
-      LP.selectDay(selectedDay);
-      editing = null;
-      refresh();
-    });
-    window.addEventListener("lp:month", () => { if (token) refresh(); });
-
     token = loadToken();
-    if (token) refresh(true);
+    if (token) { renderGrid(); refresh(true); }
     else signedOutView();
 
-    // Keep it fresh: every 5 minutes, and when coming back to the tab
-    setInterval(() => { if (token && !editing && document.visibilityState === "visible") refresh(true); }, 5 * 60e3);
+    // Keep it fresh: every 5 minutes; move "today" at midnight
+    setInterval(() => {
+      const k = dayKey(today0());
+      if (k !== todayKeyNow) { todayKeyNow = k; renderGrid(); if (token && !editing) render(); }
+      if (token && !editing && document.visibilityState === "visible") refresh(true);
+    }, 5 * 60e3);
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState !== "visible") return;
       if (token && token.expires_at < Date.now()) { token = null; signedOutView(); }

@@ -41,57 +41,10 @@
     const hello = h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
     $("#greeting").replaceChildren(`${hello}, `, el("span", { class: "nick" }, C.name));
     $("#today").textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
-    // New day? Move the calendar to today
-    const todayKey = now.toDateString();
-    if (todayKey !== calTodayKey) { calTodayKey = todayKey; calShown = { y: now.getFullYear(), m: now.getMonth() }; renderCalendar(); }
-  }
-
-  // ---------- mini calendar ----------
-  let calTodayKey = "";
-  let calShown = { y: new Date().getFullYear(), m: new Date().getMonth() };
-  let calEventDays = new Set(); // "YYYY-MM-DD" days that have events (filled by calendar.js)
-  let calSelected = null;       // day clicked in the mini calendar
-  const pad2 = (n) => String(n).padStart(2, "0");
-
-  function renderCalendar() {
-    const now = new Date();
-    const { y, m } = calShown;
-    const first = new Date(y, m, 1);
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    const isThisMonth = y === now.getFullYear() && m === now.getMonth();
-    $("#cal-title").textContent = first.toLocaleDateString("en-US", { month: "long", year: "numeric" });
-    const cells = ["S", "M", "T", "W", "T", "F", "S"].map((d) => el("div", { class: "cal-dow" }, d));
-    for (let i = 0; i < first.getDay(); i++) cells.push(el("div", {}));
-    for (let d = 1; d <= daysInMonth; d++) {
-      const wd = new Date(y, m, d).getDay();
-      const isToday = isThisMonth && d === now.getDate();
-      const key = `${y}-${pad2(m + 1)}-${pad2(d)}`;
-      cells.push(el("button", {
-        type: "button",
-        class: "cal-day" + (isToday ? " today" : "") + (wd === 0 || wd === 6 ? " weekend" : "") +
-          (calEventDays.has(key) ? " has-events" : "") + (calSelected === key ? " selected" : ""),
-        "aria-current": isToday ? "date" : null,
-        "aria-label": new Date(y, m, d).toDateString() + (calEventDays.has(key) ? ", has events" : ""),
-        onclick: () => window.dispatchEvent(new CustomEvent("lp:day", { detail: key })),
-      }, d));
-    }
-    $("#cal-grid").replaceChildren(...cells);
-  }
-
-  function moveCalendar(step) {
-    const d = new Date(calShown.y, calShown.m + step, 1);
-    calShown = { y: d.getFullYear(), m: d.getMonth() };
-    renderCalendar();
-    window.dispatchEvent(new CustomEvent("lp:month"));
   }
 
   // Small shared toolbox for calendar.js
-  window.LP = {
-    el,
-    getShownMonth: () => ({ ...calShown }),
-    setEventDays(days) { calEventDays = days; renderCalendar(); },
-    selectDay(key) { calSelected = key; renderCalendar(); },
-  };
+  window.LP = { el };
 
   // ---------- clocks ----------
   function partsIn(tz, now) {
@@ -370,14 +323,6 @@
   // ---------- wire up ----------
   function start() {
     renderGreeting();
-    $("#cal-prev").addEventListener("click", () => moveCalendar(-1));
-    $("#cal-next").addEventListener("click", () => moveCalendar(1));
-    $("#cal-title").addEventListener("click", () => {
-      const n = new Date();
-      calShown = { y: n.getFullYear(), m: n.getMonth() };
-      renderCalendar();
-      window.dispatchEvent(new CustomEvent("lp:month"));
-    });
     buildClocks();
     renderLinks();
     renderTodos();

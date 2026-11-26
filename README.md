@@ -6,8 +6,8 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 
 ## What's on it
 - 🔍 **Google search box**
-- 📅 **Mini calendar** (top right) with today highlighted and dots on days with events
-- 📅 **My calendar:** my Google Calendar (all calendars). See the next 7 days, add, change and delete events. Sign in with Google once
+- 🗓️ **Month view** of my Google Calendar with event boxes in each day (like my phone widget). Click a day or an event
+- 📅 **My calendar:** all my Google calendars. Add, change and delete events. Sign in with Google once
 - 🕐 **World clocks** with seconds: San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
 - 🌤️ **Weather in one shot** (°F and °C): San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
   - **Today** view: now, high/low, rain chance (when 30% or more)
