@@ -48,7 +48,7 @@ h2 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
 .add-pill { background: #f1f1f1; color: #222; border: 0; border-radius: 999px; font-size: 18px; line-height: 1; padding: 4px 16px; }
 .add-pill:hover { background: #fff; }
 .month-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--border); margin: 0 -16px 12px; }
-.mg-dow { text-align: center; color: var(--yellow); font-size: 11px; padding: 3px 0; border-bottom: 1px solid var(--border); }
+.mg-dow { text-align: center; color: var(--muted); background: var(--yellow); font-size: 11px; padding: 3px 0; border-bottom: 1px solid var(--border); }
 .mg-day { min-height: 64px; padding: 2px 2px 4px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .mg-day:nth-child(7n) { border-right: 0; }
 .mg-day:hover { background: var(--card-2); }
