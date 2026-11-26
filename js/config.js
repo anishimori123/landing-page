@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.5.0",
+  version: "1.5.1",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -94,6 +94,12 @@ window.CONFIG = {
         { name: "Business", url: "https://www.bloomberg.com/feeds/business/news.rss" },
         { name: "Crypto", url: "https://www.bloomberg.com/feeds/crypto/news.rss" },
         { name: "Opinion", url: "https://www.bloomberg.com/feeds/bview/news.rss" },
+      ],
+    },
+    {
+      source: "Nikkei Asia",
+      genres: [
+        { name: "Latest", url: "https://asia.nikkei.com/rss/feed/nar" },
       ],
     },
   ],

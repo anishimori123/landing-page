@@ -13,7 +13,7 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
   - **Today** view: now, high/low, rain chance (when 30% or more)
   - **7 days** view: a table comparing every city for the week
   - ＋ add any city, ✕ remove one (remembered in this browser)
-- 📰 **News:** Bloomberg headlines by genre (official RSS via rss2json.com); click to read on Bloomberg
+- 📰 **News:** tabs for Bloomberg (by genre) and Nikkei Asia (official RSS feeds via rss2json.com); click to read on the publisher's site
 - ✅ **To-do list:** type and press Enter, tick, delete, "Clear done"
 - 🗂️ **My projects** and 🔗 **quick links**
 

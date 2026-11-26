@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.5.1**](#v151--2026-11-25-time-spent-10-min) | 2026-11-25 | 10 min | 🗞️ Nikkei Asia tab in the News box |
 | [**v1.5.0**](#v150--2026-11-25-time-spent-20-min) | 2026-11-25 | 20 min | 📰 News box: Bloomberg headlines by genre |
 | [**v1.4.4**](#v144--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | 💙 Date under my name in light blue |
 | [**v1.4.3**](#v143--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | ✏️ Nickname spelling: Atsuwatti |
@@ -39,6 +40,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.5.1 — 2026-11-25 (time spent: ~10 min)
+- **What changed:** Added a **Nikkei Asia** tab (English edition, official RSS feed `asia.nikkei.com/rss/feed/nar`) next to Bloomberg in the News box, with the latest 10 headlines. That feed doesn't include publish times, so no "min ago" is shown.
+- **Why:** I also read Nikkei. The Japanese nikkei.com has no RSS feed of its own; a Google News workaround gave 2-week-old headlines and got rate-limited, so it's left out for now.
 
 ## v1.5.0 — 2026-11-25 (time spent: ~20 min)
 - **What changed:** New **📰 News** box under the weather. There's one tab per source (first: **Bloomberg**) and genre buttons (Markets, Technology, Economics, Politics, Business, Crypto, Opinion), showing the latest 10 headlines with how long ago each was posted. Clicking opens the article on Bloomberg (where I'm logged in). Headlines are saved for 15 minutes; if a refresh fails, the last ones stay. Sources and genres live in `js/config.js` (`news`).
