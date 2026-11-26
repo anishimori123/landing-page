@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.6.3**](#v163--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 🖤 Weekday letters in black on the yellow row |
 | [**v1.6.2**](#v162--2026-11-26-time-spent-2-min) | 2026-11-26 | 2 min | 💛 Weekday row: yellow background, letters back to gray |
 | [**v1.6.1**](#v161--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 💛 Calendar weekday row in yellow |
 | [**v1.6.0**](#v160--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 🇯🇵 日経 tab: section buttons + Nikkei search |
@@ -44,6 +45,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.6.3 — 2026-11-26 (time spent: ~1 min)
+- **What changed:** The weekday letters (S M T W T F S) are now black and slightly bold on the yellow row.
+- **Why:** Gray letters were hard to read on yellow.
 
 ## v1.6.2 — 2026-11-26 (time spent: ~2 min)
 - **What changed:** The weekday row (S M T W T F S) now has a yellow background across the whole line, and the letters are back to their original gray.
