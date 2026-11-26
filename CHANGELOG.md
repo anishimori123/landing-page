@@ -25,12 +25,17 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.3.1**](#v131--2026-11-25-time-spent-5-min) | 2026-11-25 | 5 min | 🔏 Privacy policy page (needed by Google) |
 | [**v1.3.0**](#v130--2026-11-25-time-spent-45-min) | 2026-11-25 | 45 min | 📅 My Google Calendar: see, add, change, delete events |
 | [**v1.2.1**](#v121--2026-11-25-time-spent-2-min) | 2026-11-25 | 2 min | 📊 Myojin spreadsheet link in My projects |
 | [**v1.2.0**](#v120--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 📅 Mini calendar, yellow nickname, seconds on clocks, °F + °C |
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.3.1 — 2026-11-25 (time spent: ~5 min)
+- **What changed:** Added `privacy.html`, a short privacy policy: calendar data goes only from Google to my browser, nothing is stored elsewhere, and how to remove access. Added a "Privacy" link in the footer.
+- **Why:** Google wouldn't add my Gmail as a test user ("Ineligible accounts not added"). To switch the app to **In production** instead, Google needs a home page and a privacy policy address.
 
 ## v1.3.0 — 2026-11-25 (time spent: ~45 min)
 - **What changed:**
