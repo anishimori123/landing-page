@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.6.1**](#v161--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 💛 Calendar weekday row in yellow |
 | [**v1.6.0**](#v160--2026-11-25-time-spent-15-min) | 2026-11-25 | 15 min | 🇯🇵 日経 tab: section buttons + Nikkei search |
 | [**v1.5.2**](#v152--2026-11-25-time-spent-1-min) | 2026-11-25 | 1 min | ➖ Removed the Nikkei Asia tab |
 | [**v1.5.1**](#v151--2026-11-25-time-spent-10-min) | 2026-11-25 | 10 min | 🗞️ Nikkei Asia tab in the News box |
@@ -42,6 +43,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.6.1 — 2026-11-26 (time spent: ~1 min)
+- **What changed:** The weekday letters row (S M T W T F S) at the top of the month calendar is now yellow, the same yellow as my nickname.
+- **Why:** Easier to see, and it matches the nickname color.
 
 ## v1.6.0 — 2026-11-25 (time spent: ~15 min)
 - **What changed:** New **日経** tab in the News box: big buttons for トップ, 速報, マーケット, テック, ビジネス, 経済, 国際, 朝刊・夕刊 and Myニュース, plus a 日経で検索 box. Each opens the real nikkei.com page in a new tab, where I'm logged in. All addresses were checked on 2026-11-25. A source in `config.js` can now have `links` (+ `search`) instead of feed `genres`.
