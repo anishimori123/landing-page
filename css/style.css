@@ -1,0 +1,111 @@
+/* Dark theme, like AtsuMail */
+:root {
+  --bg: #0e1014;
+  --card: #161920;
+  --card-2: #1c2029;
+  --border: #262b36;
+  --text: #e7e9ee;
+  --muted: #8b93a7;
+  --accent: #7aa2f7;
+  --good: #9ece6a;
+  --rain: #7dcfff;
+  --night: #bb9af7;
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body { font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 26px; font-weight: 600; margin: 0; }
+h2 { font-size: 15px; font-weight: 600; margin: 0; color: var(--text); }
+.muted { color: var(--muted); }
+.tiny { font-size: 12px; }
+.spaced { margin-top: 16px; }
+
+.page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; display: grid; gap: 14px; }
+.top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+
+.search { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; padding: 4px 16px; }
+.search input { flex: 1; background: transparent; border: 0; color: var(--text); font-size: 16px; padding: 10px 0; outline: none; }
+.search:focus-within { border-color: var(--accent); }
+
+.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.head-tools { display: flex; align-items: center; gap: 6px; }
+
+button { font: inherit; color: var(--text); background: var(--card-2); border: 1px solid var(--border); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+.icon-btn { width: 32px; height: 32px; padding: 0; font-size: 16px; }
+.link-btn { background: none; border: 0; color: var(--muted); font-size: 13px; padding: 2px 4px; }
+.link-btn:hover { color: var(--accent); }
+.switch { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.switch button { border: 0; border-radius: 0; background: transparent; color: var(--muted); padding: 5px 12px; }
+.switch button.on { background: var(--accent); color: #0e1014; font-weight: 600; }
+
+/* Clocks */
+.clocks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.clock { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
+.clock .label { color: var(--muted); font-size: 13px; }
+.clock .time { font-size: 28px; font-weight: 600; letter-spacing: .5px; font-variant-numeric: tabular-nums; }
+.clock .sub { font-size: 12px; color: var(--muted); }
+.clock.night .time { color: var(--night); }
+
+/* Weather: today */
+.weather-today { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.city { position: relative; background: var(--card-2); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+.city .name { font-size: 13px; color: var(--muted); padding-right: 18px; }
+.city .now { font-size: 26px; font-weight: 600; }
+.city .icon { font-size: 22px; margin-right: 6px; }
+.city .desc { font-size: 12px; color: var(--muted); }
+.city .hl { font-size: 13px; }
+.rain { color: var(--rain); font-size: 12px; }
+.remove { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; padding: 0; font-size: 13px; line-height: 1; background: transparent; border: 0; color: var(--muted); }
+.remove:hover { color: #f7768e; }
+
+/* Weather: 7 days */
+.table-wrap { overflow-x: auto; }
+.week { width: 100%; border-collapse: collapse; min-width: 640px; }
+.week th, .week td { padding: 8px 6px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.week th { font-size: 12px; color: var(--muted); font-weight: 600; }
+.week th:first-child, .week td:first-child { text-align: left; position: sticky; left: 0; background: var(--card); }
+.week td .icon { font-size: 18px; display: block; }
+.week td .hl { font-size: 13px; }
+.week td .lo { color: var(--muted); }
+.week tr:last-child td { border-bottom: 0; }
+
+.city-form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.city-form[hidden] { display: none; }
+.city-form input, #todo-input { flex: 1; min-width: 180px; background: var(--card-2); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 8px 10px; font-size: 15px; outline: none; }
+.city-form input:focus, #todo-input:focus { border-color: var(--accent); }
+.city-results { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* Two columns */
+.two-col { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 14px; }
+
+/* To-do */
+.todo-list { list-style: none; margin: 0 0 10px; padding: 0; }
+.todo-list li { display: flex; align-items: center; gap: 10px; padding: 7px 2px; border-bottom: 1px solid var(--border); }
+.todo-list li:last-child { border-bottom: 0; }
+.todo-list input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--good); }
+.todo-list .text { flex: 1; overflow-wrap: anywhere; }
+.todo-list li.done .text { color: var(--muted); text-decoration: line-through; }
+.todo-list .del { background: none; border: 0; color: var(--muted); font-size: 16px; padding: 0 4px; }
+.todo-list .del:hover { color: #f7768e; }
+.empty { color: var(--muted); font-size: 13px; padding: 6px 2px; }
+
+/* Chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chip { display: inline-flex; flex-direction: column; background: var(--card-2); border: 1px solid var(--border); border-radius: 10px; padding: 7px 12px; color: var(--text); }
+.chip:hover { border-color: var(--accent); text-decoration: none; }
+.chip small { color: var(--muted); font-size: 11px; }
+
+footer { text-align: center; padding-top: 6px; }
+
+/* Phone */
+@media (max-width: 720px) {
+  .clocks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .two-col { grid-template-columns: minmax(0, 1fr); }
+  .clock .time { font-size: 24px; }
+  h1 { font-size: 22px; }
+}

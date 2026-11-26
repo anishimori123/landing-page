@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1014">
+  <title>Atsushi's landing page</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <h1 id="greeting">Hello</h1>
+      <div id="today" class="muted"></div>
+    </header>
+
+    <form class="search" action="https://www.google.com/search" method="get" role="search">
+      <span aria-hidden="true">🔍</span>
+      <input id="search" name="q" type="search" placeholder="Search Google" autocomplete="off" aria-label="Search Google">
+    </form>
+
+    <section aria-label="World clocks">
+      <div id="clocks" class="clocks"></div>
+    </section>
+
+    <section class="card" aria-labelledby="weather-title">
+      <div class="card-head">
+        <h2 id="weather-title">🌤️ Weather</h2>
+        <div class="head-tools">
+          <div class="switch" role="group" aria-label="Weather view">
+            <button type="button" data-mode="today">Today</button>
+            <button type="button" data-mode="week">7 days</button>
+          </div>
+          <button type="button" id="weather-refresh" class="icon-btn" title="Refresh weather" aria-label="Refresh weather">↻</button>
+          <button type="button" id="city-add-toggle" class="icon-btn" title="Add a city" aria-label="Add a city">＋</button>
+        </div>
+      </div>
+      <form id="city-form" class="city-form" hidden>
+        <input id="city-input" type="text" placeholder="Type a city, like Seattle" autocomplete="off" aria-label="City name">
+        <button type="submit">Find</button>
+        <div id="city-results" class="city-results"></div>
+      </form>
+      <div id="weather" class="weather"><p class="muted">Loading weather…</p></div>
+      <div id="weather-updated" class="tiny muted"></div>
+    </section>
+
+    <div class="two-col">
+      <section class="card" aria-labelledby="todo-title">
+        <div class="card-head">
+          <h2 id="todo-title">✅ To-do</h2>
+          <button type="button" id="todo-clear" class="link-btn">Clear done</button>
+        </div>
+        <ul id="todo-list" class="todo-list"></ul>
+        <form id="todo-form">
+          <input id="todo-input" type="text" placeholder="Add a to-do and press Enter" autocomplete="off" aria-label="New to-do">
+        </form>
+      </section>
+
+      <section class="card" aria-labelledby="proj-title">
+        <h2 id="proj-title">🗂️ My projects</h2>
+        <div id="projects" class="chips"></div>
+        <h2 class="spaced">🔗 Quick links</h2>
+        <div id="links" class="chips"></div>
+      </section>
+    </div>
+
+    <footer class="tiny muted">
+      <span id="version"></span> ·
+      Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a> ·
+      To-dos and cities are saved only in this browser.
+    </footer>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
