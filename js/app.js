@@ -52,18 +52,46 @@
     return { time, hour, date, weekday };
   }
 
-  function renderClocks() {
+  // Each clock slot remembers which time zone was picked in its drop-down
+  const validTz = (tz) => C.clockChoices.some((c) => c.tz === tz);
+  let clockZones = C.clocks.map((c, i) => {
+    const saved = store.get("lp.clockZones", [])[i];
+    return saved && validTz(saved) ? saved : c.tz;
+  });
+  const clockSlots = [];
+
+  // Build the 4 clock cards once (so the drop-downs don't reset every second)
+  function buildClocks() {
+    $("#clocks").replaceChildren(...C.clocks.map((def, i) => {
+      const choices = C.clockChoices.some((c) => c.tz === def.tz) ? C.clockChoices : [def, ...C.clockChoices];
+      const select = el("select", { class: "clock-pick", "aria-label": `Clock ${i + 1} city`,
+        onchange: (e) => {
+          clockZones[i] = e.target.value;
+          store.set("lp.clockZones", clockZones);
+          tickClocks();
+        } },
+        choices.map((c) => el("option", { value: c.tz, selected: c.tz === clockZones[i] }, c.label)));
+      const time = el("div", { class: "time" });
+      const sub = el("div", { class: "sub" });
+      const card = el("div", { class: "clock" }, select, time, sub);
+      clockSlots[i] = { card, time, sub };
+      return card;
+    }));
+    tickClocks();
+  }
+
+  // Update only the times every second
+  function tickClocks() {
     const now = new Date();
     const home = partsIn(C.homeTimeZone, now).date;
-    $("#clocks").replaceChildren(...C.clocks.map((c) => {
-      const p = partsIn(c.tz, now);
+    clockSlots.forEach((slot, i) => {
+      const p = partsIn(clockZones[i], now);
       const isDay = p.hour >= 6 && p.hour < 18;
       const when = p.date > home ? `${p.weekday} · tomorrow` : p.date < home ? `${p.weekday} · yesterday` : p.weekday;
-      return el("div", { class: "clock" + (isDay ? "" : " night") },
-        el("div", { class: "label" }, c.label),
-        el("div", { class: "time" }, p.time),
-        el("div", { class: "sub" }, `${isDay ? "☀️ day" : "🌙 night"} · ${when}`));
-    }));
+      slot.card.classList.toggle("night", !isDay);
+      slot.time.textContent = p.time;
+      slot.sub.textContent = `${isDay ? "☀️ day" : "🌙 night"} · ${when}`;
+    });
   }
 
   // ---------- weather ----------
@@ -105,21 +133,41 @@
       timezone: "auto",
       forecast_days: "7",
     });
-    const res = await fetch("https://api.open-meteo.com/v1/forecast?" + params);
-    if (!res.ok) throw new Error("Weather service answered " + res.status);
-    const json = await res.json();
-    return Array.isArray(json) ? json : [json]; // one city = object, many = list
+    const url = "https://api.open-meteo.com/v1/forecast?" + params;
+    // Try up to 3 times: the connection sometimes drops for a moment
+    const waits = [0, 1500, 4000];
+    let lastErr;
+    for (let attempt = 0; attempt < waits.length; attempt++) {
+      if (waits[attempt]) await new Promise((r) => setTimeout(r, waits[attempt]));
+      const stop = new AbortController();
+      const timer = setTimeout(() => stop.abort(), 10e3);
+      try {
+        const res = await fetch(url, { signal: stop.signal });
+        if (!res.ok) throw new Error("Weather service answered " + res.status);
+        const json = await res.json();
+        return Array.isArray(json) ? json : [json]; // one city = object, many = list
+      } catch (err) {
+        lastErr = err;
+        console.warn(`Weather try ${attempt + 1} failed:`, err.message);
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+    throw lastErr;
   }
 
+  let retryTimer = null;
   async function loadWeather(force = false) {
     const box = $("#weather");
+    clearTimeout(retryTimer);
     if (!cities.length) {
       weatherData = [];
       renderWeather();
       return;
     }
     const cached = store.get("lp.weatherCache", null);
-    if (!force && cached && cached.key === cacheKey() && Date.now() - cached.at < CACHE_MINUTES * 60e3) {
+    const cacheFits = cached && cached.key === cacheKey();
+    if (!force && cacheFits && Date.now() - cached.at < CACHE_MINUTES * 60e3) {
       weatherData = cached.data;
       renderWeather(cached.at);
       return;
@@ -132,8 +180,17 @@
       renderWeather(Date.now());
     } catch (err) {
       console.error(err);
-      if (weatherData) { renderWeather(); }
-      else box.replaceChildren(el("p", { class: "muted" }, "Couldn't load the weather. Check your internet, then tap ↻."));
+      // Try again by itself in 1 minute
+      retryTimer = setTimeout(() => loadWeather(true), 60e3);
+      if (!weatherData && cacheFits) weatherData = cached.data; // older saved weather is better than nothing
+      if (weatherData) {
+        renderWeather();
+        $("#weather-updated").textContent = "Couldn't refresh. Showing saved weather" +
+          (cacheFits ? " from " + new Date(cached.at).toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" }) : "") +
+          ". Trying again in 1 minute.";
+      } else {
+        box.replaceChildren(el("p", { class: "muted" }, "Couldn't reach the weather service. Trying again in 1 minute (or tap ↻)."));
+      }
     }
   }
 
@@ -253,7 +310,7 @@
   // ---------- wire up ----------
   function start() {
     renderGreeting();
-    renderClocks();
+    buildClocks();
     renderLinks();
     renderTodos();
     $("#version").textContent = "v" + C.version;
@@ -291,7 +348,7 @@
     if (window.matchMedia && window.matchMedia("(min-width: 720px)").matches) $("#search").focus();
 
     loadWeather();
-    setInterval(renderClocks, 1000);
+    setInterval(tickClocks, 1000);
     setInterval(renderGreeting, 60e3);
     setInterval(() => loadWeather(), CACHE_MINUTES * 60e3);
   }

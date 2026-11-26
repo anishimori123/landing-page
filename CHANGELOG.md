@@ -1,10 +1,39 @@
 # CHANGELOG — landing-page
 
+<!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
+## Project growth
+**2** versions · **55** min (~0.9 h) spent · **573** lines of code now
+
+```mermaid
+xychart-beta
+    title "Total time spent (minutes)"
+    x-axis ["v1.0.0", "v1.1.0"]
+    y-axis "minutes" 0 --> 67
+    line [30, 55]
+```
+
+```mermaid
+xychart-beta
+    title "Lines of code"
+    x-axis ["v1.0.0", "v1.1.0"]
+    y-axis "lines" 0 --> 688
+    line [490, 573]
+```
+<!-- PROJECT-STATS:END -->
+
 Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.1.0 — 2026-11-25 (time spent: ~25 min)
+- **What changed:**
+  - 🕐 Each clock now has a **city drop-down** (21 cities, from Honolulu to Auckland). The defaults stay San Carlos, New York, London, Tokyo, and each pick is remembered in the browser.
+  - 🌤️ Weather now **tries 3 times** when the connection drops, then tries again by itself every minute. Meanwhile it shows the last saved weather instead of an error.
+  - 📈 New **Project growth** line charts at the top of this file (total time spent, lines of code), redrawn by a free GitHub robot (`scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml`).
+- **Why:** I want to switch clock cities when needed. On launch day the weather got stuck on "Loading…" because the connection to Open-Meteo was being cut off (`ERR_CONNECTION_RESET`) for a few minutes. And I want to see the project grow, like my agent repo's charts.
 
 ## v1.0.0 — 2026-11-25 (time spent: ~30 min)
 - **What changed:** First version of my start page, with a dark AtsuMail-style theme:

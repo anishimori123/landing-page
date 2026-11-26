@@ -3,18 +3,44 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.0.0",
+  version: "1.1.0",
   name: "Atsushi",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
   homeTimeZone: "America/Los_Angeles",
 
-  // World clocks: label + time zone name
+  // World clocks: the 4 default cities (each clock also has a drop-down
+  // on the page to pick another city; the page remembers your choice)
   clocks: [
     { label: "San Carlos (PST)", tz: "America/Los_Angeles" },
     { label: "New York", tz: "America/New_York" },
     { label: "London", tz: "Europe/London" },
     { label: "Tokyo", tz: "Asia/Tokyo" },
+  ],
+
+  // Cities you can pick in each clock's drop-down
+  clockChoices: [
+    { label: "San Carlos (PST)", tz: "America/Los_Angeles" },
+    { label: "Honolulu", tz: "Pacific/Honolulu" },
+    { label: "Anchorage", tz: "America/Anchorage" },
+    { label: "Denver", tz: "America/Denver" },
+    { label: "Chicago", tz: "America/Chicago" },
+    { label: "New York", tz: "America/New_York" },
+    { label: "Toronto", tz: "America/Toronto" },
+    { label: "Mexico City", tz: "America/Mexico_City" },
+    { label: "São Paulo", tz: "America/Sao_Paulo" },
+    { label: "London", tz: "Europe/London" },
+    { label: "Paris", tz: "Europe/Paris" },
+    { label: "Berlin", tz: "Europe/Berlin" },
+    { label: "Dubai", tz: "Asia/Dubai" },
+    { label: "Mumbai", tz: "Asia/Kolkata" },
+    { label: "Singapore", tz: "Asia/Singapore" },
+    { label: "Hong Kong", tz: "Asia/Hong_Kong" },
+    { label: "Shanghai", tz: "Asia/Shanghai" },
+    { label: "Seoul", tz: "Asia/Seoul" },
+    { label: "Tokyo", tz: "Asia/Tokyo" },
+    { label: "Sydney", tz: "Australia/Sydney" },
+    { label: "Auckland", tz: "Pacific/Auckland" },
   ],
 
   // Starting weather cities. You can also add/remove cities on the page;

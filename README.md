@@ -6,7 +6,7 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 
 ## What's on it
 - 🔍 **Google search box**
-- 🕐 **World clocks:** San Carlos (PST), New York, London, Tokyo. Live, with day/night and "tomorrow" when it's already the next day there
+- 🕐 **World clocks:** San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
 - 🌤️ **Weather in one shot:** San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
   - **Today** view: now, high/low, rain chance (when 30% or more)
   - **7 days** view: a table comparing every city for the week
@@ -30,6 +30,13 @@ They don't sync between my PC and phone.
 | `css/style.css` | Colors and layout (dark theme, phone layout) |
 | `js/config.js` | **My settings:** clocks, starting cities, projects, quick links. Edit this one |
 | `js/app.js` | How everything works |
+| `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
+| `stats/code-lines.json` | Lines of code per version (for the chart) |
+
+## If the weather doesn't load
+The page tries 3 times, then again every minute, and shows the last saved weather meanwhile.
+If it never loads, open https://api.open-meteo.com/v1/forecast?latitude=37.5&longitude=-122.26&current=temperature_2m in a new tab.
+If that page doesn't open either, something on the network (Wi-Fi, VPN, ad blocker, antivirus) is blocking Open-Meteo. Try another network or pause the blocker.
 
 ## How to change things
 Open `js/config.js` on GitHub → click the ✏️ pencil → edit → **Commit changes**.

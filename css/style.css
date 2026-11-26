@@ -47,6 +47,9 @@ button:hover { border-color: var(--accent); }
 .clocks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .clock { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
 .clock .label { color: var(--muted); font-size: 13px; }
+.clock-pick { max-width: 100%; background: transparent; color: var(--muted); border: 1px solid transparent; border-radius: 6px; font: inherit; font-size: 13px; padding: 1px 2px; margin-left: -3px; cursor: pointer; }
+.clock-pick:hover, .clock-pick:focus { border-color: var(--border); color: var(--text); outline: none; }
+.clock-pick option { background: var(--card); color: var(--text); }
 .clock .time { font-size: 28px; font-weight: 600; letter-spacing: .5px; font-variant-numeric: tabular-nums; }
 .clock .sub { font-size: 12px; color: var(--muted); }
 .clock.night .time { color: var(--night); }
