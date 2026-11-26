@@ -3,8 +3,8 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.1.0",
-  name: "Atsushi",
+  version: "1.1.1",
+  name: "Atsuwwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
   homeTimeZone: "America/Los_Angeles",
