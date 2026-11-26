@@ -41,6 +41,7 @@ If that page doesn't open either, something on the network (Wi-Fi, VPN, ad block
 ## How to change things
 Open `js/config.js` on GitHub → click the ✏️ pencil → edit → **Commit changes**.
 The live page updates in about 1 minute (refresh the page).
+When releasing a new version, also change the `?v=…` numbers in `index.html`, so browsers load the new files instead of an old saved copy.
 
 ## Set it as my start page
 
