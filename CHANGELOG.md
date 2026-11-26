@@ -2,22 +2,22 @@
 
 <!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
 ## Project growth
-**11** versions · **160** min (~2.7 h) spent · **1,139** lines of code now
+**12** versions · **161** min (~2.7 h) spent · **1,139** lines of code now
 
 ```mermaid
 xychart-beta
     title "Total time spent (minutes)"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2"]
-    y-axis "minutes" 0 --> 193
-    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3"]
+    y-axis "minutes" 0 --> 194
+    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161]
 ```
 
 ```mermaid
 xychart-beta
     title "Lines of code"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2"]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3"]
     y-axis "lines" 0 --> 1367
-    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139]
+    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139]
 ```
 <!-- PROJECT-STATS:END -->
 
