@@ -43,6 +43,8 @@ They don't sync between my PC and phone.
 | `js/calendar.js` | My Google Calendar card (sign-in, events, add/change/delete) |
 | `js/news.js` | News box (sources, genres, headlines) |
 | `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
+| `manifest.webmanifest` + `icons/` | Tell a phone the app's name, colors and icon (yellow house), so it installs like an app |
+| `scripts/make_icons.py` | Draws the icons again (only needed to change the icon) |
 | `scripts/stamp_version.py` | Copies the version number from `js/config.js` into `index.html` (the same robot runs it) |
 | `stats/code-lines.json` | Lines of code per version (for the chart) |
 
@@ -75,5 +77,7 @@ A free "new tab redirect" style extension from the Chrome Web Store or Edge Add-
 
 ### Pixel phone
 1. Open the live page in Chrome.
-2. Tap **⋮** → **Add to home screen** → **Add**.
-3. An icon appears on the home screen and opens the page like an app.
+2. Tap **⋮** → **Add to home screen** → **Install** (if it only says **Add**, tap that).
+3. A yellow house icon named **Home** appears on the home screen. It opens the page full screen, without Chrome's address bar.
+
+If an older icon is already there: long-press it → **Remove**, then do the 3 steps again to get the new icon.

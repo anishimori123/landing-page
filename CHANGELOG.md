@@ -2,22 +2,22 @@
 
 <!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
 ## Project growth
-**21** versions · **227** min (~3.8 h) spent · **1,342** lines of code now
+**22** versions · **242** min (~4.0 h) spent · **1,344** lines of code now
 
 ```mermaid
 xychart-beta
     title "Total time spent (minutes)"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4"]
-    y-axis "minutes" 0 --> 273
-    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0"]
+    y-axis "minutes" 0 --> 291
+    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227, 242]
 ```
 
 ```mermaid
 xychart-beta
     title "Lines of code"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4"]
-    y-axis "lines" 0 --> 1611
-    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0"]
+    y-axis "lines" 0 --> 1613
+    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342, 1344]
 ```
 <!-- PROJECT-STATS:END -->
 
@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.7.0**](#v170--2026-11-27-time-spent-15-min) | 2026-11-27 | 15 min | 🏠 Real phone icon: installs on the Pixel like an app |
 | [**v1.6.4**](#v164--2026-11-27-time-spent-15-min) | 2026-11-27 | 15 min | 🧹 Small fixes: PST/PDT by itself, links in new tabs, `/` for search, one version number |
 | [**v1.6.3**](#v163--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 🖤 Weekday letters in black on the yellow row |
 | [**v1.6.2**](#v162--2026-11-26-time-spent-2-min) | 2026-11-26 | 2 min | 💛 Weekday row: yellow background, letters back to gray |
@@ -46,6 +47,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.7.0 — 2026-11-27 (time spent: ~15 min)
+- **What changed:** New `manifest.webmanifest` (a small note that tells a phone the app's name, colors and icon) and two icon pictures in `icons/` (a yellow house on the dark page color, 192 and 512 pixels). `index.html` now points to them. New `scripts/make_icons.py` draws the icons, in case I want to change them.
+- **Why:** On my Pixel the home-screen shortcut had a plain letter icon and opened inside Chrome with the address bar. With a manifest it gets a real icon and opens full screen. To see it, remove the old shortcut and add the page to the home screen again.
 
 ## v1.6.4 — 2026-11-27 (time spent: ~15 min)
 - **What changed:**
