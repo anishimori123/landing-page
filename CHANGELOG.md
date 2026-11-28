@@ -2,22 +2,22 @@
 
 <!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
 ## Project growth
-**20** versions · **212** min (~3.5 h) spent · **1,314** lines of code now
+**21** versions · **227** min (~3.8 h) spent · **1,342** lines of code now
 
 ```mermaid
 xychart-beta
     title "Total time spent (minutes)"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3"]
-    y-axis "minutes" 0 --> 255
-    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4"]
+    y-axis "minutes" 0 --> 273
+    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227]
 ```
 
 ```mermaid
 xychart-beta
     title "Lines of code"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3"]
-    y-axis "lines" 0 --> 1577
-    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4"]
+    y-axis "lines" 0 --> 1611
+    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342]
 ```
 <!-- PROJECT-STATS:END -->
 
@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.6.4**](#v164--2026-11-27-time-spent-15-min) | 2026-11-27 | 15 min | 🧹 Small fixes: PST/PDT by itself, links in new tabs, `/` for search, one version number |
 | [**v1.6.3**](#v163--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 🖤 Weekday letters in black on the yellow row |
 | [**v1.6.2**](#v162--2026-11-26-time-spent-2-min) | 2026-11-26 | 2 min | 💛 Weekday row: yellow background, letters back to gray |
 | [**v1.6.1**](#v161--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 💛 Calendar weekday row in yellow |
@@ -45,6 +46,15 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.6.4 — 2026-11-27 (time spent: ~15 min)
+- **What changed:**
+  - The San Carlos clock now writes **(PST)** in winter and **(PDT)** in summer by itself (`zone: true` in `config.js`).
+  - **My projects** and **Quick links** open in a new tab, like the news links.
+  - Pressing **`/`** on a computer jumps to the search box (a small `/` hint shows inside it).
+  - The version number now lives in **one place**, `js/config.js`. New `scripts/stamp_version.py` copies it into the `?v=…` numbers in `index.html`, and the GitHub robot runs it on every push.
+  - Removed the leftover `calendarDaysAhead` setting (nothing used it since the month view in v1.4.0).
+- **Why:** A review of the whole project found these. "PST" was wrong for 8 months of the year, clicking a project replaced my start page, and the version number had to be typed in 6 places (easy to forget one and get an old saved copy of the page).
 
 ## v1.6.3 — 2026-11-26 (time spent: ~1 min)
 - **What changed:** The weekday letters (S M T W T F S) are now black and slightly bold on the yellow row.

@@ -5,17 +5,17 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 **Live page:** https://anishimori123.github.io/landing-page/
 
 ## What's on it
-- 🔍 **Google search box**
+- 🔍 **Google search box** (on a computer, press `/` to jump to it)
 - 🗓️ **Month view** of my Google Calendar with event boxes in each day (like my phone widget). Click a day or an event
 - 📅 **My calendar:** all my Google calendars. Add, change and delete events. Sign in with Google once
-- 🕐 **World clocks** with seconds: San Carlos (PST), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
+- 🕐 **World clocks** with seconds: San Carlos (shows PST in winter and PDT in summer by itself), New York, London, Tokyo by default. Live, with day/night and "tomorrow" when it's already the next day there. Click a clock's city name to pick another city (remembered in this browser)
 - 🌤️ **Weather in one shot** (°F and °C): San Carlos, Los Angeles, Carlsbad, Palm Desert, New York
   - **Today** view: now, high/low, rain chance (when 30% or more)
   - **7 days** view: a table comparing every city for the week
   - ＋ add any city, ✕ remove one (remembered in this browser)
 - 📰 **News:** Bloomberg headlines by genre (official RSS feeds via rss2json.com), and a 日経 tab with buttons to Nikkei sections + Nikkei search
 - ✅ **To-do list:** type and press Enter, tick, delete, "Clear done"
-- 🗂️ **My projects** and 🔗 **quick links**
+- 🗂️ **My projects** and 🔗 **quick links** (each opens in a new tab, so the start page stays open)
 
 ## Privacy
 This repo is **public**, so nothing private goes in it.
@@ -43,6 +43,7 @@ They don't sync between my PC and phone.
 | `js/calendar.js` | My Google Calendar card (sign-in, events, add/change/delete) |
 | `js/news.js` | News box (sources, genres, headlines) |
 | `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
+| `scripts/stamp_version.py` | Copies the version number from `js/config.js` into `index.html` (the same robot runs it) |
 | `stats/code-lines.json` | Lines of code per version (for the chart) |
 
 ## If the weather doesn't load
@@ -53,7 +54,8 @@ If that page doesn't open either, something on the network (Wi-Fi, VPN, ad block
 ## How to change things
 Open `js/config.js` on GitHub → click the ✏️ pencil → edit → **Commit changes**.
 The live page updates in about 1 minute (refresh the page).
-When releasing a new version, also change the `?v=…` numbers in `index.html`, so browsers load the new files instead of an old saved copy.
+When releasing a new version, change the `version` number in `js/config.js` **only**.
+The GitHub robot copies it into the `?v=…` numbers in `index.html` about a minute later, so browsers load the new files instead of an old saved copy.
 
 ## Set it as my start page
 

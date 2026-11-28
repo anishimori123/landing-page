@@ -56,6 +56,14 @@
     return { hm: `${t.hour}:${t.minute}`, sec: t.second, ampm: t.dayPeriod || "", hour, date, weekday };
   }
 
+  // "San Carlos" + zone: true -> "San Carlos (PST)" in winter, "San Carlos (PDT)" in summer
+  function zoneName(tz, now = new Date()) {
+    const part = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "short" })
+      .formatToParts(now).find((p) => p.type === "timeZoneName");
+    return part ? part.value : "";
+  }
+  const clockLabel = (c) => (c.zone ? `${c.label} (${zoneName(c.tz)})` : c.label);
+
   // Each clock slot remembers which time zone was picked in its drop-down
   const validTz = (tz) => C.clockChoices.some((c) => c.tz === tz);
   let clockZones = C.clocks.map((c, i) => {
@@ -74,14 +82,22 @@
           store.set("lp.clockZones", clockZones);
           tickClocks();
         } },
-        choices.map((c) => el("option", { value: c.tz, selected: c.tz === clockZones[i] }, c.label)));
+        choices.map((c) => el("option", { value: c.tz, selected: c.tz === clockZones[i] }, clockLabel(c))));
       const time = el("div", { class: "time" });
       const sub = el("div", { class: "sub" });
       const card = el("div", { class: "clock" }, select, time, sub);
-      clockSlots[i] = { card, time, sub };
+      clockSlots[i] = { card, time, sub, select, choices };
       return card;
     }));
     tickClocks();
+  }
+
+  // Once a minute: fix the (PST)/(PDT) names if the clocks just changed for summer or winter
+  function refreshClockLabels() {
+    clockSlots.forEach((slot) => slot.choices.forEach((c, k) => {
+      const opt = slot.select.options[k];
+      if (c.zone && opt && opt.textContent !== clockLabel(c)) opt.textContent = clockLabel(c);
+    }));
   }
 
   // Update only the times every second
@@ -316,8 +332,8 @@
 
   // ---------- projects + links ----------
   function renderLinks() {
-    $("#projects").replaceChildren(...C.projects.map((p) => el("a", { class: "chip", href: p.url }, p.name, el("small", {}, p.note))));
-    $("#links").replaceChildren(...C.links.map((l) => el("a", { class: "chip", href: l.url }, l.name)));
+    $("#projects").replaceChildren(...C.projects.map((p) => el("a", { class: "chip", href: p.url, target: "_blank", rel: "noopener" }, p.name, el("small", {}, p.note))));
+    $("#links").replaceChildren(...C.links.map((l) => el("a", { class: "chip", href: l.url, target: "_blank", rel: "noopener" }, l.name)));
   }
 
   // ---------- wire up ----------
@@ -357,12 +373,22 @@
     });
     $("#todo-clear").addEventListener("click", () => { todos = todos.filter((t) => !t.done); saveTodos(); renderTodos(); });
 
+    // Press "/" anywhere (except while typing in a box) to jump to the search box
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      e.preventDefault();
+      $("#search").focus();
+      $("#search").select();
+    });
+
     // Focus search on computers only (on phones it would pop up the keyboard)
     if (window.matchMedia && window.matchMedia("(min-width: 720px)").matches) $("#search").focus();
 
     loadWeather();
     setInterval(tickClocks, 1000);
-    setInterval(renderGreeting, 60e3);
+    setInterval(() => { renderGreeting(); refreshClockLabels(); }, 60e3);
     setInterval(() => loadWeather(), CACHE_MINUTES * 60e3);
   }
 
