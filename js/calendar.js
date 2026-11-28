@@ -13,6 +13,10 @@
     "https://www.googleapis.com/auth/calendar.readonly", // see all my calendars
     "https://www.googleapis.com/auth/calendar.events",   // add, change, delete events
   ];
+  // Optional extra: lets the To-do box (js/todo.js) sync with Google Tasks
+  const TASKS_SCOPE = "https://www.googleapis.com/auth/tasks";
+  const WANT_TASKS = C.googleTasks !== false;
+  const TOKEN_VERSION = 2; // 2 = asked for Tasks too (older saved passes are thrown away once)
   const MAX_BOXES = 3; // event boxes per day before "+N more"
   const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -41,6 +45,16 @@
   const store = {
     get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
     set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch { /* ignore */ } },
+  };
+
+  // The To-do box listens here to know when I sign in or out
+  const authListeners = [];
+  const authChanged = () => authListeners.forEach((fn) => { try { fn(); } catch (err) { console.error(err); } });
+  window.LP.auth = {
+    token: () => (token && token.expires_at > Date.now() + 5e3 ? token.access_token : null),
+    canTasks: () => Boolean(token && token.tasks),
+    connectedBefore: () => Boolean(store.get("lp.gcal.connected")),
+    onChange: (fn) => authListeners.push(fn),
   };
 
   function body() { return $("#gcal-body"); }
@@ -129,7 +143,7 @@
   // ---------- sign-in ----------
   function loadToken() {
     const t = store.get("lp.gcal.token");
-    return t && t.access_token && t.expires_at > Date.now() + 60e3 ? t : null;
+    return t && t.access_token && t.v === TOKEN_VERSION && t.expires_at > Date.now() + 60e3 ? t : null;
   }
 
   function initClient() {
@@ -138,16 +152,22 @@
     if (!oauth) return false;
     tokenClient = oauth.initTokenClient({
       client_id: C.googleClientId,
-      scope: SCOPES.join(" "),
+      scope: (WANT_TASKS ? [...SCOPES, TASKS_SCOPE] : SCOPES).join(" "),
       callback: (resp) => {
         if (resp.error) { signedOutView(`Sign-in didn't finish (${resp.error}).`); return; }
         if (!oauth.hasGrantedAllScopes(resp, ...SCOPES)) {
-          signedOutView("Please tick both calendar boxes on Google's screen, so the page can show and edit your events.");
+          signedOutView("Please tick the calendar boxes on Google's screen, so the page can show and edit your events.");
           return;
         }
-        token = { access_token: resp.access_token, expires_at: Date.now() + (Number(resp.expires_in) || 3600) * 1000 };
+        token = {
+          v: TOKEN_VERSION,
+          access_token: resp.access_token,
+          expires_at: Date.now() + (Number(resp.expires_in) || 3600) * 1000,
+          tasks: WANT_TASKS && oauth.hasGrantedAllScopes(resp, TASKS_SCOPE), // false if I left the Tasks box unticked
+        };
         store.set("lp.gcal.token", token);
         store.set("lp.gcal.connected", true);
+        authChanged();
         refresh(true);
       },
       error_callback: (err) => {
@@ -174,6 +194,7 @@
 
   function signedOutView(message) {
     setTools(false);
+    authChanged();
     renderGrid();
     const again = store.get("lp.gcal.connected");
     note(message || (again

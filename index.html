@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <link rel="stylesheet" href="css/style.css?v=1.7.0">
+  <link rel="stylesheet" href="css/style.css?v=1.8.0">
 </head>
 <body>
   <main class="page">
@@ -89,6 +89,7 @@
         <form id="todo-form">
           <input id="todo-input" type="text" placeholder="Add a to-do and press Enter" autocomplete="off" aria-label="New to-do">
         </form>
+        <div id="todo-status" class="tiny muted todo-status" role="status"></div>
       </section>
 
       <section class="card" aria-labelledby="proj-title">
@@ -103,15 +104,16 @@
       <span id="version"></span> ·
       Weather data by <a href="https://open-meteo.com/">Open-Meteo.com</a> ·
       Headlines link to their publishers ·
-      To-dos and cities are saved only in this browser. ·
+      Cities are saved only in this browser; to-dos too, unless you sign in to Google. ·
       <a href="privacy.html">Privacy</a>
     </footer>
   </main>
 
-  <script src="js/config.js?v=1.7.0"></script>
-  <script src="js/app.js?v=1.7.0"></script>
+  <script src="js/config.js?v=1.8.0"></script>
+  <script src="js/app.js?v=1.8.0"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="js/calendar.js?v=1.7.0"></script>
-  <script src="js/news.js?v=1.7.0"></script>
+  <script src="js/calendar.js?v=1.8.0"></script>
+  <script src="js/todo.js?v=1.8.0"></script>
+  <script src="js/news.js?v=1.8.0"></script>
 </body>
 </html>

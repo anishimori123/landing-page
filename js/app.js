@@ -1,4 +1,5 @@
-// My landing page: clocks, weather (today + 7 days), to-do, links.
+// My landing page: greeting, clocks, weather (today + 7 days), links.
+// The calendar, news and to-do boxes have their own files.
 // Settings live in js/config.js.
 (() => {
   "use strict";
@@ -43,7 +44,7 @@
     $("#today").textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
   }
 
-  // Small shared toolbox for calendar.js
+  // Small shared toolbox for calendar.js, todo.js and news.js
   window.LP = { el };
 
   // ---------- clocks ----------
@@ -317,19 +318,6 @@
     loadWeather(true);
   }
 
-  // ---------- to-do ----------
-  let todos = store.get("lp.todos", null) || C.starterTodos.map((text, i) => ({ id: Date.now() + i, text, done: false }));
-  const saveTodos = () => store.set("lp.todos", todos);
-
-  function renderTodos() {
-    const list = $("#todo-list");
-    if (!todos.length) { list.replaceChildren(el("li", { class: "empty" }, "Nothing to do. Nice!")); return; }
-    list.replaceChildren(...todos.map((t) => el("li", { class: t.done ? "done" : "" },
-      el("input", { type: "checkbox", checked: t.done, "aria-label": `Done: ${t.text}`, onchange: () => { t.done = !t.done; saveTodos(); renderTodos(); } }),
-      el("span", { class: "text" }, t.text),
-      el("button", { type: "button", class: "del", title: "Delete", "aria-label": `Delete ${t.text}`, onclick: () => { todos = todos.filter((x) => x.id !== t.id); saveTodos(); renderTodos(); } }, "✕"))));
-  }
-
   // ---------- projects + links ----------
   function renderLinks() {
     $("#projects").replaceChildren(...C.projects.map((p) => el("a", { class: "chip", href: p.url, target: "_blank", rel: "noopener" }, p.name, el("small", {}, p.note))));
@@ -341,7 +329,6 @@
     renderGreeting();
     buildClocks();
     renderLinks();
-    renderTodos();
     $("#version").textContent = "v" + C.version;
 
     document.querySelectorAll(".switch button").forEach((b) => b.addEventListener("click", () => {
@@ -361,17 +348,6 @@
       if (name.length < 2) { $("#city-results").replaceChildren(el("span", { class: "muted tiny" }, "Type at least 2 letters.")); return; }
       findCity(name);
     });
-    $("#todo-form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const input = $("#todo-input");
-      const text = input.value.trim();
-      if (!text) return;
-      todos = [...todos, { id: Date.now(), text, done: false }];
-      saveTodos();
-      renderTodos();
-      input.value = "";
-    });
-    $("#todo-clear").addEventListener("click", () => { todos = todos.filter((t) => !t.done); saveTodos(); renderTodos(); });
 
     // Press "/" anywhere (except while typing in a box) to jump to the search box
     document.addEventListener("keydown", (e) => {

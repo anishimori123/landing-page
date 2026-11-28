@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.7.0",
+  version: "1.8.0",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -57,6 +57,10 @@ window.CONFIG = {
   // Google Calendar: the app ID from Google Cloud (not a secret; it only works
   // on https://anishimori123.github.io). Events never get saved in this repo.
   googleClientId: "986348569746-k5qamhfpv3jblem4qsavmc86vbsg44ak.apps.googleusercontent.com",
+
+  // To-do box: true = also sync with Google Tasks when I'm signed in (PC and phone
+  // show the same list). false = keep to-dos only in this browser.
+  googleTasks: true,
 
   // "fahrenheit" or "celsius"
   temperatureUnit: "fahrenheit",

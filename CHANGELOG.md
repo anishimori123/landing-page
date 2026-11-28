@@ -2,22 +2,22 @@
 
 <!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
 ## Project growth
-**22** versions · **242** min (~4.0 h) spent · **1,344** lines of code now
+**23** versions · **287** min (~4.8 h) spent · **1,577** lines of code now
 
 ```mermaid
 xychart-beta
     title "Total time spent (minutes)"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0"]
-    y-axis "minutes" 0 --> 291
-    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227, 242]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0"]
+    y-axis "minutes" 0 --> 345
+    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227, 242, 287]
 ```
 
 ```mermaid
 xychart-beta
     title "Lines of code"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0"]
-    y-axis "lines" 0 --> 1613
-    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342, 1344]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0"]
+    y-axis "lines" 0 --> 1893
+    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342, 1344, 1577]
 ```
 <!-- PROJECT-STATS:END -->
 
@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.8.0**](#v180--2026-11-27-time-spent-45-min) | 2026-11-27 | 45 min | 🔄 To-dos sync between PC and Pixel through Google Tasks |
 | [**v1.7.0**](#v170--2026-11-27-time-spent-15-min) | 2026-11-27 | 15 min | 🏠 Real phone icon: installs on the Pixel like an app |
 | [**v1.6.4**](#v164--2026-11-27-time-spent-15-min) | 2026-11-27 | 15 min | 🧹 Small fixes: PST/PDT by itself, links in new tabs, `/` for search, one version number |
 | [**v1.6.3**](#v163--2026-11-26-time-spent-1-min) | 2026-11-26 | 1 min | 🖤 Weekday letters in black on the yellow row |
@@ -47,6 +48,16 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.8.0 — 2026-11-27 (time spent: ~45 min)
+- **What changed:**
+  - The to-do box now syncs with my **Google Tasks** list "My Tasks" when I am signed in to Google (same sign-in as the calendar, plus one new permission box for Tasks). Add, tick, delete and "Clear done" go to Google, and to-dos from my other device show up here within 5 minutes or when I come back to the tab.
+  - It still works signed out: to-dos stay saved in the browser, and changes made meanwhile are sent at the next Reconnect. A small line under the box says what is going on ("Synced with Google Tasks at 4:05 PM", "Reconnect Google to sync 2 changes", …).
+  - The to-do code moved out of `app.js` into its own file, `js/todo.js`. `calendar.js` shares the Google sign-in with it. New switch `googleTasks` in `config.js` (set `false` to keep to-dos only in the browser).
+  - Everyone has to press Reconnect once after this update, because the old saved pass does not include Tasks.
+  - README: one-time setup steps (switch on the Google Tasks API in my Google Cloud project, free). Privacy page updated.
+- **Why:** To-dos typed on my PC did not show on my phone. Google Tasks is free, uses the sign-in I already have, and also shows the same list in Gmail and Google Calendar.
+- **Tested:** 9 automatic checks against a pretend Google Tasks server (first sign-in merge, tick, delete, changes from the other device, changes made while signed out, quick clicks during a slow sync, Tasks not switched on). **Not tested with my real Google account yet**; that needs my own sign-in on the live page.
 
 ## v1.7.0 — 2026-11-27 (time spent: ~15 min)
 - **What changed:** New `manifest.webmanifest` (a small note that tells a phone the app's name, colors and icon) and two icon pictures in `icons/` (a yellow house on the dark page color, 192 and 512 pixels). `index.html` now points to them. New `scripts/make_icons.py` draws the icons, in case I want to change them.

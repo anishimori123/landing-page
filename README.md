@@ -14,13 +14,13 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
   - **7 days** view: a table comparing every city for the week
   - ＋ add any city, ✕ remove one (remembered in this browser)
 - 📰 **News:** Bloomberg headlines by genre (official RSS feeds via rss2json.com), and a 日経 tab with buttons to Nikkei sections + Nikkei search
-- ✅ **To-do list:** type and press Enter, tick, delete, "Clear done"
+- ✅ **To-do list:** type and press Enter, tick, delete, "Clear done". Signed in to Google, it syncs with **Google Tasks**, so my PC and my Pixel show the same list
 - 🗂️ **My projects** and 🔗 **quick links** (each opens in a new tab, so the start page stays open)
 
 ## Privacy
 This repo is **public**, so nothing private goes in it.
-To-dos and my city list are saved **only in my browser** (localStorage), never uploaded.
-They don't sync between my PC and phone.
+My city list and clock choices are saved **only in my browser** (localStorage), never uploaded.
+To-dos are saved in my browser too. Only when I sign in to Google do they also go to **my own Google Tasks** (nowhere else, and never into this repo).
 
 ## Google Calendar
 - Sign-in is Google's own window. The page gets a pass that lasts about 1 hour, then shows a one-click **Reconnect** button.
@@ -28,7 +28,28 @@ They don't sync between my PC and phone.
 - The app ID in `js/config.js` is not a secret. It only works on `https://anishimori123.github.io`.
 - Events are never saved in this repo; they go straight from Google to my browser.
 
+## To-do sync (Google Tasks)
+The to-do box uses the same Google sign-in as the calendar.
+
+**One-time setup (free, about 1 minute):**
+1. Open https://console.cloud.google.com/apis/library/tasks.googleapis.com
+2. At the top of the page, check that the project name says **landing-page**. If not, click the name and pick it.
+3. Click the blue **Enable** button. Success looks like: the button changes to **Manage**.
+4. Open the landing page and click **Reconnect Google Calendar** (or **Sign in with Google**).
+5. On Google's screen, tick the new box about **Google Tasks**, then **Continue**.
+6. Success looks like: under the to-do box it says **Synced with Google Tasks at …**. Do steps 4 to 6 once on the phone too.
+
+**How it behaves:**
+- It uses the Google Tasks list called **My Tasks**. The same to-dos show in Google's own Tasks app, Gmail and Google Calendar.
+- Signed out (Google's pass lasts about 1 hour), the list still works. Changes wait in the browser and are sent at the next **Reconnect**. The line under the box says how many are waiting.
+- The other device catches up within 5 minutes, or right away when I come back to the tab.
+- **✕** and **Clear done** delete the to-do in Google Tasks too.
+- A to-do ticked inside Google's own Tasks app disappears from this page (Google hides its finished tasks).
+- If the same to-do was typed on both devices before syncing, it is joined into one, not doubled.
+- To turn syncing off: set `googleTasks: false` in `js/config.js`.
+
 ## Free services used
+- To-do sync: Google Tasks API (free for personal use).
 - Calendar: Google Calendar API (free for personal use).
 - Weather and city search: [Open-Meteo](https://open-meteo.com/). Free, no account, no key.
 - Hosting: GitHub Pages (free for public repos).
@@ -40,7 +61,8 @@ They don't sync between my PC and phone.
 | `css/style.css` | Colors and layout (dark theme, phone layout) |
 | `js/config.js` | **My settings:** clocks, starting cities, projects, quick links. Edit this one |
 | `js/app.js` | How everything works |
-| `js/calendar.js` | My Google Calendar card (sign-in, events, add/change/delete) |
+| `js/calendar.js` | My Google Calendar card (Google sign-in, events, add/change/delete) |
+| `js/todo.js` | To-do box (saved in the browser, synced with Google Tasks when signed in) |
 | `js/news.js` | News box (sources, genres, headlines) |
 | `scripts/changelog_stats.py` + `.github/workflows/changelog-stats.yml` | GitHub robot that redraws the growth charts in `CHANGELOG.md` |
 | `manifest.webmanifest` + `icons/` | Tell a phone the app's name, colors and icon (yellow house), so it installs like an app |
