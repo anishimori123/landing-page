@@ -40,7 +40,8 @@
     const now = new Date();
     const h = now.getHours();
     const hello = h < 5 ? "Good night" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
-    $("#greeting").replaceChildren(`${hello}, `, el("span", { class: "nick" }, C.name));
+    $("#greeting").replaceChildren(`${hello}, `, el("span", { class: "nick" }, C.name),
+      " ", el("span", { class: "ver", title: "The version of this page that is running now" }, "v" + C.version));
     $("#today").textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
   }
 
