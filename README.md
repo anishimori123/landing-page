@@ -4,6 +4,8 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 
 **Live page:** https://anishimori123.github.io/landing-page/
 
+**Phone widget (separate, lighter page):** see [`widget/`](widget/README.md). It has its own files, settings and CHANGELOG.
+
 ## What's on it
 - 🏷️ **Version number** next to my name at the top (and at the bottom), so I can see which version is running
 - 🔍 **Google search box** (on a computer, press `/` to jump to it)

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1014">
+  <title>Atsushi's widget</title>
+  <link rel="icon" href="../icons/icon-192.png">
+  <link rel="stylesheet" href="widget.css">
+</head>
+<body>
+  <a id="open" class="widget" href="../" aria-label="Open the full landing page">
+    <header class="now">
+      <div id="date" class="date"></div>
+      <div id="time" class="time"></div>
+    </header>
+
+    <section id="clocks" class="clocks" aria-label="World clocks"></section>
+
+    <section class="block" aria-label="Weather">
+      <div id="weather" class="weather"><p class="muted">Loading weather…</p></div>
+      <div id="compare" class="compare"></div>
+    </section>
+
+    <section class="block" aria-label="Today's events">
+      <h2>Today</h2>
+      <div id="events" class="events"><p class="muted">Loading events…</p></div>
+    </section>
+
+    <footer id="foot" class="foot"></footer>
+  </a>
+
+  <script src="config.js"></script>
+  <script src="widget.js"></script>
+</body>
+</html>
