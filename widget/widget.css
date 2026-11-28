@@ -1,0 +1,65 @@
+/* Widget look: same dark colors as the full page, but its own file on purpose */
+:root {
+  --bg: #0e1014;
+  --card: #161920;
+  --border: #262b36;
+  --text: #e7e9ee;
+  --muted: #8b93a7;
+  --yellow: #f5c542;
+  --blue: #7dcfff;
+  --night: #bb9af7;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body { font: 14px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+
+/* The whole widget is one big link to the full page */
+.widget { display: grid; gap: 10px; max-width: 480px; margin: 0 auto; padding: 12px; color: inherit; text-decoration: none; }
+
+/* 1. Date and local time, big */
+.now { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.date { color: var(--blue); font-size: 15px; font-weight: 600; }
+.time { font-size: clamp(38px, 13vw, 56px); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: .5px; }
+.time small { font-size: .4em; font-weight: 600; color: var(--muted); margin-left: 4px; }
+
+/* 2. Three small clocks */
+.clocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.clock { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 7px 9px; min-width: 0; }
+.clock .label { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.clock .t { font-size: 17px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.clock .t small { font-size: .65em; color: var(--muted); margin-left: 2px; }
+.clock.night .t { color: var(--night); }
+.clock .sub { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* 3. Weather: two cities side by side */
+.weather { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.weather > p { grid-column: 1 / -1; }
+.city { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.city .name { font-size: 11px; color: var(--muted); }
+.city .temp { font-size: 26px; font-weight: 700; line-height: 1.15; white-space: nowrap; }
+.city .temp .icon { font-size: 20px; margin-right: 4px; }
+.city .temp small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 5px; }
+.city .line { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.city .rain { color: var(--blue); }
+.compare { font-size: 12px; color: var(--yellow); margin-top: 6px; }
+.compare:empty { display: none; }
+
+/* 4. Today's events */
+h2 { margin: 0 0 4px; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+.events { display: grid; gap: 4px; }
+.event { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.event .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; align-self: center; }
+.event .when { flex: none; width: 66px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.event .what { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.event.past { opacity: .5; }
+.events .note { font-size: 11px; color: var(--muted); }
+
+.foot { font-size: 10px; color: var(--muted); text-align: right; }
+
+/* Very narrow widgets */
+@media (max-width: 300px) {
+  .clocks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .weather { grid-template-columns: minmax(0, 1fr); }
+}
