@@ -5,6 +5,7 @@ My own browser start page, the way I want it. Dark theme, like AtsuMail.
 **Live page:** https://anishimori123.github.io/landing-page/
 
 ## What's on it
+- 🏷️ **Version number** next to my name at the top (and at the bottom), so I can see which version is running
 - 🔍 **Google search box** (on a computer, press `/` to jump to it)
 - 🗓️ **Month view** of my Google Calendar with event boxes in each day (like my phone widget). Click a day or an event
 - 📅 **My calendar:** all my Google calendars. Add, change and delete events. Sign in with Google once
