@@ -1,5 +1,6 @@
-# Redraws the "Project growth" charts at the top of CHANGELOG.md
-# every time the page or the CHANGELOG changes. Free; takes a few seconds.
+# Redraws the "Project growth" charts at the top of CHANGELOG.md and copies the
+# version number from js/config.js into index.html, every time the page or the
+# CHANGELOG changes. Free; takes a few seconds.
 name: Changelog stats
 
 on:
@@ -10,7 +11,7 @@ on:
       - "index.html"
       - "css/**"
       - "js/**"
-      - "scripts/changelog_stats.py"
+      - "scripts/**"
       - ".github/workflows/changelog-stats.yml"
   workflow_dispatch: {}
 
@@ -26,17 +27,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Copy the version number into index.html
+        run: python3 scripts/stamp_version.py
       - name: Count and redraw the charts
         run: python3 scripts/changelog_stats.py
-      - name: Save the charts if they changed
+      - name: Save the changes, if any
         run: |
           if git diff --quiet; then
-            echo "Charts already up to date."
+            echo "Already up to date."
             exit 0
           fi
           git config user.name "changelog-stats bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md stats/code-lines.json
-          git commit -m "Update project growth charts"
+          git add CHANGELOG.md stats/code-lines.json index.html
+          git commit -m "Update version stamp and project growth charts"
           git pull --rebase
           git push

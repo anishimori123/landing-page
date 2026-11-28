@@ -3,16 +3,17 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.6.3",
+  version: "1.8.0",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
   homeTimeZone: "America/Los_Angeles",
 
   // World clocks: the 4 default cities (each clock also has a drop-down
-  // on the page to pick another city; the page remembers your choice)
+  // on the page to pick another city; the page remembers your choice).
+  // zone: true adds the zone's short name by itself: (PST) in winter, (PDT) in summer.
   clocks: [
-    { label: "San Carlos (PST)", tz: "America/Los_Angeles" },
+    { label: "San Carlos", tz: "America/Los_Angeles", zone: true },
     { label: "New York", tz: "America/New_York" },
     { label: "London", tz: "Europe/London" },
     { label: "Tokyo", tz: "Asia/Tokyo" },
@@ -20,7 +21,7 @@ window.CONFIG = {
 
   // Cities you can pick in each clock's drop-down
   clockChoices: [
-    { label: "San Carlos (PST)", tz: "America/Los_Angeles" },
+    { label: "San Carlos", tz: "America/Los_Angeles", zone: true },
     { label: "Honolulu", tz: "Pacific/Honolulu" },
     { label: "Anchorage", tz: "America/Anchorage" },
     { label: "Denver", tz: "America/Denver" },
@@ -56,7 +57,10 @@ window.CONFIG = {
   // Google Calendar: the app ID from Google Cloud (not a secret; it only works
   // on https://anishimori123.github.io). Events never get saved in this repo.
   googleClientId: "986348569746-k5qamhfpv3jblem4qsavmc86vbsg44ak.apps.googleusercontent.com",
-  calendarDaysAhead: 7,
+
+  // To-do box: true = also sync with Google Tasks when I'm signed in (PC and phone
+  // show the same list). false = keep to-dos only in this browser.
+  googleTasks: true,
 
   // "fahrenheit" or "celsius"
   temperatureUnit: "fahrenheit",

@@ -1,4 +1,5 @@
-// My landing page: clocks, weather (today + 7 days), to-do, links.
+// My landing page: greeting, clocks, weather (today + 7 days), links.
+// The calendar, news and to-do boxes have their own files.
 // Settings live in js/config.js.
 (() => {
   "use strict";
@@ -43,7 +44,7 @@
     $("#today").textContent = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
   }
 
-  // Small shared toolbox for calendar.js
+  // Small shared toolbox for calendar.js, todo.js and news.js
   window.LP = { el };
 
   // ---------- clocks ----------
@@ -55,6 +56,14 @@
     const weekday = new Intl.DateTimeFormat("en-US", { timeZone: tz, weekday: "short" }).format(now);
     return { hm: `${t.hour}:${t.minute}`, sec: t.second, ampm: t.dayPeriod || "", hour, date, weekday };
   }
+
+  // "San Carlos" + zone: true -> "San Carlos (PST)" in winter, "San Carlos (PDT)" in summer
+  function zoneName(tz, now = new Date()) {
+    const part = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "short" })
+      .formatToParts(now).find((p) => p.type === "timeZoneName");
+    return part ? part.value : "";
+  }
+  const clockLabel = (c) => (c.zone ? `${c.label} (${zoneName(c.tz)})` : c.label);
 
   // Each clock slot remembers which time zone was picked in its drop-down
   const validTz = (tz) => C.clockChoices.some((c) => c.tz === tz);
@@ -74,14 +83,22 @@
           store.set("lp.clockZones", clockZones);
           tickClocks();
         } },
-        choices.map((c) => el("option", { value: c.tz, selected: c.tz === clockZones[i] }, c.label)));
+        choices.map((c) => el("option", { value: c.tz, selected: c.tz === clockZones[i] }, clockLabel(c))));
       const time = el("div", { class: "time" });
       const sub = el("div", { class: "sub" });
       const card = el("div", { class: "clock" }, select, time, sub);
-      clockSlots[i] = { card, time, sub };
+      clockSlots[i] = { card, time, sub, select, choices };
       return card;
     }));
     tickClocks();
+  }
+
+  // Once a minute: fix the (PST)/(PDT) names if the clocks just changed for summer or winter
+  function refreshClockLabels() {
+    clockSlots.forEach((slot) => slot.choices.forEach((c, k) => {
+      const opt = slot.select.options[k];
+      if (c.zone && opt && opt.textContent !== clockLabel(c)) opt.textContent = clockLabel(c);
+    }));
   }
 
   // Update only the times every second
@@ -301,23 +318,10 @@
     loadWeather(true);
   }
 
-  // ---------- to-do ----------
-  let todos = store.get("lp.todos", null) || C.starterTodos.map((text, i) => ({ id: Date.now() + i, text, done: false }));
-  const saveTodos = () => store.set("lp.todos", todos);
-
-  function renderTodos() {
-    const list = $("#todo-list");
-    if (!todos.length) { list.replaceChildren(el("li", { class: "empty" }, "Nothing to do. Nice!")); return; }
-    list.replaceChildren(...todos.map((t) => el("li", { class: t.done ? "done" : "" },
-      el("input", { type: "checkbox", checked: t.done, "aria-label": `Done: ${t.text}`, onchange: () => { t.done = !t.done; saveTodos(); renderTodos(); } }),
-      el("span", { class: "text" }, t.text),
-      el("button", { type: "button", class: "del", title: "Delete", "aria-label": `Delete ${t.text}`, onclick: () => { todos = todos.filter((x) => x.id !== t.id); saveTodos(); renderTodos(); } }, "✕"))));
-  }
-
   // ---------- projects + links ----------
   function renderLinks() {
-    $("#projects").replaceChildren(...C.projects.map((p) => el("a", { class: "chip", href: p.url }, p.name, el("small", {}, p.note))));
-    $("#links").replaceChildren(...C.links.map((l) => el("a", { class: "chip", href: l.url }, l.name)));
+    $("#projects").replaceChildren(...C.projects.map((p) => el("a", { class: "chip", href: p.url, target: "_blank", rel: "noopener" }, p.name, el("small", {}, p.note))));
+    $("#links").replaceChildren(...C.links.map((l) => el("a", { class: "chip", href: l.url, target: "_blank", rel: "noopener" }, l.name)));
   }
 
   // ---------- wire up ----------
@@ -325,7 +329,6 @@
     renderGreeting();
     buildClocks();
     renderLinks();
-    renderTodos();
     $("#version").textContent = "v" + C.version;
 
     document.querySelectorAll(".switch button").forEach((b) => b.addEventListener("click", () => {
@@ -345,24 +348,23 @@
       if (name.length < 2) { $("#city-results").replaceChildren(el("span", { class: "muted tiny" }, "Type at least 2 letters.")); return; }
       findCity(name);
     });
-    $("#todo-form").addEventListener("submit", (e) => {
+
+    // Press "/" anywhere (except while typing in a box) to jump to the search box
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
       e.preventDefault();
-      const input = $("#todo-input");
-      const text = input.value.trim();
-      if (!text) return;
-      todos = [...todos, { id: Date.now(), text, done: false }];
-      saveTodos();
-      renderTodos();
-      input.value = "";
+      $("#search").focus();
+      $("#search").select();
     });
-    $("#todo-clear").addEventListener("click", () => { todos = todos.filter((t) => !t.done); saveTodos(); renderTodos(); });
 
     // Focus search on computers only (on phones it would pop up the keyboard)
     if (window.matchMedia && window.matchMedia("(min-width: 720px)").matches) $("#search").focus();
 
     loadWeather();
     setInterval(tickClocks, 1000);
-    setInterval(renderGreeting, 60e3);
+    setInterval(() => { renderGreeting(); refreshClockLabels(); }, 60e3);
     setInterval(() => loadWeather(), CACHE_MINUTES * 60e3);
   }
 
