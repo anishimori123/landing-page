@@ -2,22 +2,22 @@
 
 <!-- PROJECT-STATS:START (auto-updated by GitHub, don't edit by hand) -->
 ## Project growth
-**25** versions · **292** min (~4.9 h) spent · **1,581** lines of code now
+**26** versions · **294** min (~4.9 h) spent · **1,582** lines of code now
 
 ```mermaid
 xychart-beta
     title "Total time spent (minutes)"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0", "v1.8.1", "v1.8.2"]
-    y-axis "minutes" 0 --> 351
-    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227, 242, 287, 290, 292]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0", "v1.8.1", "v1.8.2", "v1.8.3"]
+    y-axis "minutes" 0 --> 353
+    line [30, 55, 58, 73, 75, 120, 125, 127, 152, 157, 160, 161, 162, 182, 192, 193, 208, 209, 211, 212, 227, 242, 287, 290, 292, 294]
 ```
 
 ```mermaid
 xychart-beta
     title "Lines of code"
-    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0", "v1.8.1", "v1.8.2"]
-    y-axis "lines" 0 --> 1898
-    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342, 1344, 1577, 1580, 1581]
+    x-axis ["v1.0.0", "v1.1.0", "v1.1.1", "v1.2.0", "v1.2.1", "v1.3.0", "v1.3.1", "v1.3.2", "v1.4.0", "v1.4.1", "v1.4.2", "v1.4.3", "v1.4.4", "v1.5.0", "v1.5.1", "v1.5.2", "v1.6.0", "v1.6.1", "v1.6.2", "v1.6.3", "v1.6.4", "v1.7.0", "v1.8.0", "v1.8.1", "v1.8.2", "v1.8.3"]
+    y-axis "lines" 0 --> 1899
+    line [490, 573, 573, 647, 648, 1118, 1119, 1119, 1127, 1139, 1139, 1139, 1140, 1272, 1278, 1272, 1314, 1314, 1314, 1314, 1342, 1344, 1577, 1580, 1581, 1582]
 ```
 <!-- PROJECT-STATS:END -->
 
@@ -25,6 +25,7 @@ Newest first. Never delete or rewrite old entries.
 
 | Version | Date | Time | Summary |
 |---|---|---|---|
+| [**v1.8.3**](#v183--2026-11-27-time-spent-2-min) | 2026-11-27 | 2 min | 📰 Quick link to "News: people I follow" |
 | [**v1.8.2**](#v182--2026-11-27-time-spent-2-min) | 2026-11-27 | 2 min | 🐙 GitHub profile link in My projects |
 | [**v1.8.1**](#v181--2026-11-27-time-spent-3-min) | 2026-11-27 | 3 min | 🏷️ Version number next to my name |
 | [**v1.8.0**](#v180--2026-11-27-time-spent-45-min) | 2026-11-27 | 45 min | 🔄 To-dos sync between PC and Pixel through Google Tasks |
@@ -50,6 +51,10 @@ Newest first. Never delete or rewrite old entries.
 | [**v1.1.1**](#v111--2026-11-25-time-spent-3-min) | 2026-11-25 | 3 min | 😎 Greeting uses my nickname |
 | [**v1.1.0**](#v110--2026-11-25-time-spent-25-min) | 2026-11-25 | 25 min | 🕐 City drop-down on each clock; weather retries; growth charts |
 | [**v1.0.0**](#v100--2026-11-25-time-spent-30-min) | 2026-11-25 | 30 min | 🏠 First version: search, clocks, weather (today + 7 days), to-do, links |
+
+## v1.8.3 — 2026-11-27 (time spent: ~2 min)
+- **What changed:** New button in **Quick links**: **News: people I follow**, which opens my News page https://anishimori123.github.io/News/ in a new tab.
+- **Why:** One click from my start page to my own news page.
 
 ## v1.8.2 — 2026-11-27 (time spent: ~2 min)
 - **What changed:** New first button in **My projects**: **GitHub** ("all my repos"), which opens my GitHub profile page https://github.com/anishimori123 in a new tab.

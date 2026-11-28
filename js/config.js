@@ -3,7 +3,7 @@
 // After editing, save to GitHub and refresh the page.
 // ============================================================
 window.CONFIG = {
-  version: "1.8.2",
+  version: "1.8.3",
   name: "Atsuwatti Escobar Nishiburton",
 
   // Your own time zone (used for "tomorrow"/"yesterday" on the clocks)
@@ -84,6 +84,7 @@ window.CONFIG = {
     { name: "Claude", url: "https://claude.ai/" },
     { name: "Alpaca", url: "https://app.alpaca.markets/" },
     { name: "AtsuMail", url: "https://anishimori123.github.io/AtsuMail/" },
+    { name: "News: people I follow", url: "https://anishimori123.github.io/News/" },
   ],
 
   // News box: one tab per source, one button per genre (official RSS feeds).
