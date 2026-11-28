@@ -3,7 +3,7 @@
 // changing things here never changes the full page, and the other way round.
 // ============================================================
 window.WIDGET = {
-  version: "1.0.0",
+  version: "1.1.0",
 
   // Tapping the widget opens this (the full landing page)
   fullPage: "../",
@@ -21,10 +21,6 @@ window.WIDGET = {
     { name: "Palm Desert", lat: 33.7222, lon: -116.3745 },
   ],
 
-  // Today's calendar events: how many lines to show before "+N more"
-  maxEvents: 5,
-
-  // Battery savers: how long saved weather / events are reused before asking again (minutes)
+  // Battery saver: how long saved weather is reused before asking again (minutes)
   weatherMinutes: 30,
-  eventsMinutes: 15,
 };

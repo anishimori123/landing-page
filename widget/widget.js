@@ -1,10 +1,10 @@
 // Atsushi's widget: a small, glance-only page for the Pixel home screen.
-// Date + local time, 3 clocks, weather for 2 cities, today's calendar events.
-// SEPARATE from the full landing page: own files, own settings (config.js).
-// The only thing it shares is the Google sign-in the full page saved in this
-// browser, which it READS (never changes) to show today's events.
+// Date + local time, 3 clocks, weather for 2 cities. No sign-in, nothing private.
+// (My calendar is Google's own Calendar widget, placed under this one.)
+// SEPARATE from the full landing page: own files, own settings (config.js),
+// and it shares nothing with it.
 // Built to be easy on the battery: nothing runs while the widget is not on
-// screen, the clock moves once a minute, weather and events are reused.
+// screen, the clock moves once a minute, saved weather is reused.
 (() => {
   "use strict";
   const W = window.WIDGET;
@@ -132,92 +132,14 @@
     }
   }
 
-  // ---------- 4. today's calendar events ----------
-  const CAL = "https://www.googleapis.com/calendar/v3";
-  const safeColor = (x) => (/^#[0-9a-f]{3,8}$/i.test(x || "") ? x : "#7aa2f7");
-
-  // Read (never write) the sign-in pass the full page saved in this browser
-  function pass() {
-    const t = store.get("lp.gcal.token");
-    return t && t.access_token && t.expires_at > Date.now() + 5e3 ? t.access_token : null;
-  }
-
-  async function google(path, token) {
-    const res = await fetch(CAL + path, { headers: { Authorization: "Bearer " + token } });
-    if (!res.ok) throw new Error("Google answered " + res.status);
-    return res.json();
-  }
-
-  async function fetchEvents(token) {
-    const from = new Date(); from.setHours(0, 0, 0, 0);
-    const to = new Date(from.getFullYear(), from.getMonth(), from.getDate() + 1);
-    const list = await google("/users/me/calendarList?maxResults=250", token);
-    const cals = (list.items || []).filter((x) => !x.hidden);
-    const q = new URLSearchParams({ timeMin: from.toISOString(), timeMax: to.toISOString(), singleEvents: "true", orderBy: "startTime", maxResults: "50" });
-    const lists = await Promise.all(cals.map((cal) =>
-      google(`/calendars/${encodeURIComponent(cal.id)}/events?${q}`, token)
-        .then((r) => (r.items || []).filter((e) => e.status !== "cancelled" && e.start).map((e) => {
-          const allDay = Boolean(e.start.date);
-          return {
-            title: e.summary || "(no title)",
-            allDay,
-            start: allDay ? new Date(e.start.date + "T00:00:00").getTime() : new Date(e.start.dateTime).getTime(),
-            end: allDay ? new Date(e.end.date + "T00:00:00").getTime() : new Date(e.end.dateTime).getTime(),
-            color: safeColor(cal.backgroundColor),
-          };
-        }))
-        .catch(() => []))); // one broken calendar must not hide the others
-    return lists.flat()
-      .filter((e) => e.start < to.getTime() && (e.end > from.getTime() || e.end === e.start))
-      .sort((a, b) => (a.allDay === b.allDay ? a.start - b.start : a.allDay ? -1 : 1));
-  }
-
-  function renderEvents(items, at, note) {
-    const now = Date.now();
-    const fmt = (ms) => new Date(ms).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
-    const rows = items.slice(0, W.maxEvents).map((e) => el("div", "event" + (!e.allDay && e.end < now ? " past" : ""),
-      Object.assign(el("span", "dot"), { style: `background:${e.color}` }),
-      el("span", "when", e.allDay ? "All day" : fmt(e.start)),
-      el("span", "what", e.title)));
-    const more = items.length > W.maxEvents ? el("div", "note", `+${items.length - W.maxEvents} more`) : null;
-    $("#events").replaceChildren(...[
-      ...(rows.length ? rows : [el("p", "muted", "No events today")]),
-      more,
-      note ? el("div", "note", `${note} (events from ${fmt(at)})`) : null,
-    ].filter(Boolean));
-  }
-
-  async function loadEvents() {
-    const today = dayKey(new Date());
-    const saved = store.get("lpw.events");
-    const fits = saved && saved.day === today;
-    const token = pass();
-    if (fits) renderEvents(saved.items, saved.at, token ? "" : "Sign-in timed out. Open the full page to reconnect");
-    if (!token) {
-      if (!fits) $("#events").replaceChildren(el("p", "muted", "Not signed in here. Open the full page and sign in with Google to see today's events."));
-      return;
-    }
-    if (fits && Date.now() - saved.at < W.eventsMinutes * MIN) return; // fresh enough: no internet used
-    try {
-      const items = await fetchEvents(token);
-      store.set("lpw.events", { day: today, at: Date.now(), items });
-      renderEvents(items, Date.now(), "");
-    } catch (err) {
-      console.warn("Widget events:", err.message);
-      if (fits) renderEvents(saved.items, saved.at, "Couldn't refresh");
-      else $("#events").replaceChildren(el("p", "muted", "Couldn't load today's events right now."));
-    }
-  }
-
   // ---------- run only while on screen (battery) ----------
   let timer = null;
   function wake() {
     renderTime();
     loadWeather();
-    loadEvents();
     clearTimeout(timer);
     // Wake up again exactly when the minute changes: enough for a clock without seconds.
-    // Saved weather/events are only fetched again when older than the minutes in config.js.
+    // Saved weather is only fetched again when it is older than the minutes in config.js.
     timer = setTimeout(wake, MIN - (Date.now() % MIN) + 50);
   }
   function sleep() { clearTimeout(timer); timer = null; }
